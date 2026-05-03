@@ -4,4 +4,4 @@ deployment:
     - export DEPLOYPATH=/home/varolgur/public_html/menumen/
     - /bin/mkdir -p $DEPLOYPATH
     - /bin/cp -R admin catalog css image img js sound storage system vendor $DEPLOYPATH
-    - /bin/cp -f .htaccess favicon.ico index.php robots.txt akinsoft_api.php config.example.php $DEPLOYPATH
+    - /bin/cp -f .htaccess favicon.ico index.php robots.txt akinsoft_api.php config.example.php googlec1926a5dfcc44d70.html $DEPLOYPATH

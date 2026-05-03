@@ -360,8 +360,10 @@ class ControllerProductCategory extends Controller {
 
             if (!empty($result['image'])) {
                 $image = $this->model_tool_image->resize($result['image'], 300, 220);
+                $popup = $this->model_tool_image->resize($result['image'], 1000, 740);
             } else {
                 $image = $this->model_tool_image->resize('no_image.png', 150, 110);
+                $popup = $this->model_tool_image->resize('no_image.png', 1000, 740);
             }
 
             if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -401,6 +403,7 @@ class ControllerProductCategory extends Controller {
                 'raw_name'    => $result['name'],
                 'is_upcoming' => $name_info['is_upcoming'],
                 'thumb'       => $image,
+                'popup'       => $popup,
                 'options'     => $options,
                 'price'       => $price,
                 'special'     => $special,

@@ -122,7 +122,7 @@
                           data-category-name="{{ category.name|e }}">
 
                         <div class="encok-image menu-image-zoom"
-                             onclick="openMenuLightbox('{{ product.thumb }}?v=20', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ category.name|e('js') }}')">
+                             onclick="openMenuLightbox('{{ product.popup }}?v=21', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ category.name|e('js') }}')">
                            <img src="{{ product.thumb }}?v=20" alt="{{ product.name }}" loading="lazy" decoding="async">
                            {% if product.is_upcoming %}
                            <span class="coming-soon-badge">{{ text_coming_soon }}</span>
