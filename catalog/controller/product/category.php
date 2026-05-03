@@ -503,22 +503,22 @@ class ControllerProductCategory extends Controller {
         $value = $this->portionWeightValue($portion);
 
         if ($value <= 250) {
-            return 'Tek kişilik servis';
+            return 'Tek Porsiyon';
         }
 
         if ($value <= 350) {
-            return 'Doyurucu porsiyon';
+            return 'Bol Porsiyon';
         }
 
         if ($value <= 500) {
-            return 'Paylaşımlı servis';
+            return 'İki Kişilik';
         }
 
         if ($value <= 750) {
-            return 'Kalabalık servis';
+            return 'Üç Kişilik';
         }
 
-        return 'Özel servis';
+        return 'Dört Kişilik';
     }
 
     private function portionWeightValue(string $portion): int {
