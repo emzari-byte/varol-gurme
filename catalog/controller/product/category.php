@@ -273,12 +273,15 @@ class ControllerProductCategory extends Controller {
         }
 
         $direct_products = $this->getProductsByCategoryId($category_id, $gun, $prep_extra_minutes);
+        $direct_display = $this->groupPortionProductsForDisplay($direct_products);
 
         if (!empty($direct_products)) {
             $data['categories'][] = array(
                 'category_id' => (int)$category_info['category_id'],
                 'name'     => $category_info['name'],
                 'products' => $direct_products,
+                'display_products' => $direct_display['products'],
+                'product_groups' => $direct_display['groups'],
                 'thumb'    => !empty($category_info['image'])
                     ? $this->model_tool_image->resize($category_info['image'], 90, 90)
                     : $this->model_tool_image->resize('no_image.png', 40, 40),
@@ -315,10 +318,14 @@ class ControllerProductCategory extends Controller {
                     $child_thumb = $this->model_tool_image->resize('no_image.png', 40, 40);
                 }
 
+                $child_display = $this->groupPortionProductsForDisplay($child_products);
+
                 $data['categories'][] = array(
                     'category_id' => (int)$child_info['category_id'],
                     'name'     => $child_info['name'],
                     'products' => $child_products,
+                    'display_products' => $child_display['products'],
+                    'product_groups' => $child_display['groups'],
                     'thumb'    => $child_thumb,
                     'href'     => $this->url->link('product/category', 'path=' . (int)$category_info['category_id'] . '_' . (int)$child_info['category_id'] . $qr_param, true)
                 );
@@ -418,6 +425,119 @@ class ControllerProductCategory extends Controller {
         }
 
         return $products;
+    }
+
+    private function groupPortionProductsForDisplay(array $products): array {
+        $groups = array();
+        $singles = array();
+
+        foreach ($products as $product) {
+            $parsed = $this->parsePortionProductName($product['name']);
+
+            if (!$parsed) {
+                $singles[] = $product;
+                continue;
+            }
+
+            $group_key = $this->slugifyDisplayKey($parsed['base']);
+
+            if (!isset($groups[$group_key])) {
+                $groups[$group_key] = array(
+                    'name' => $parsed['base'],
+                    'description' => $product['description'],
+                    'thumb' => $product['popup'],
+                    'popup' => $product['popup'],
+                    'tag' => $product['tag'],
+                    'options' => $product['options'],
+                    'variants' => array()
+                );
+            }
+
+            $product['portion_label'] = $parsed['portion'];
+            $product['portion_note'] = $this->getPortionNote($parsed['portion']);
+            $groups[$group_key]['variants'][] = $product;
+        }
+
+        foreach ($groups as $key => $group) {
+            if (count($group['variants']) < 2) {
+                foreach ($group['variants'] as $variant) {
+                    unset($variant['portion_label'], $variant['portion_note']);
+                    $singles[] = $variant;
+                }
+
+                unset($groups[$key]);
+                continue;
+            }
+
+            usort($groups[$key]['variants'], function ($a, $b) {
+                return $this->portionWeightValue($a['portion_label']) <=> $this->portionWeightValue($b['portion_label']);
+            });
+        }
+
+        return array(
+            'groups' => array_values($groups),
+            'products' => $singles
+        );
+    }
+
+    private function parsePortionProductName(string $name) {
+        $clean = trim(preg_replace('/\s+/', ' ', strip_tags(html_entity_decode($name, ENT_QUOTES, 'UTF-8'))));
+
+        if (!preg_match('/^(\d+(?:[,.]\d+)?\s*(?:gr\.?|gram|kg\.?|kilogram))\s+(.+)$/iu', $clean, $matches)) {
+            return false;
+        }
+
+        $base = trim($matches[2]);
+
+        if (mb_stripos($base, 'Denizli Kebab', 0, 'UTF-8') === false) {
+            return false;
+        }
+
+        return array(
+            'portion' => trim($matches[1]),
+            'base' => $base
+        );
+    }
+
+    private function getPortionNote(string $portion): string {
+        $value = $this->portionWeightValue($portion);
+
+        if ($value <= 250) {
+            return 'Tek kişilik servis';
+        }
+
+        if ($value <= 350) {
+            return 'Doyurucu porsiyon';
+        }
+
+        if ($value <= 500) {
+            return 'Paylaşımlı servis';
+        }
+
+        if ($value <= 750) {
+            return 'Kalabalık servis';
+        }
+
+        return 'Özel servis';
+    }
+
+    private function portionWeightValue(string $portion): int {
+        $normalized = mb_strtolower(str_replace(',', '.', $portion), 'UTF-8');
+
+        if (strpos($normalized, 'kg') !== false || strpos($normalized, 'kilogram') !== false) {
+            return (int)round((float)$normalized * 1000);
+        }
+
+        return (int)round((float)$normalized);
+    }
+
+    private function slugifyDisplayKey(string $value): string {
+        $value = mb_strtolower($value, 'UTF-8');
+        $search = array('ı', 'ğ', 'ü', 'ş', 'ö', 'ç');
+        $replace = array('i', 'g', 'u', 's', 'o', 'c');
+        $value = str_replace($search, $replace, $value);
+        $value = preg_replace('/[^a-z0-9]+/i', '-', $value);
+        return trim($value, '-');
     }
 
     private function buildCategoryMenuSchema($category_name, array $categories): string {

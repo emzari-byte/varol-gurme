@@ -6616,6 +6616,225 @@ body:not(.home-entry-page) .floating-menu-top {
 	}
 }
 
+.kebab-signature-card {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: minmax(180px, 32%) 1fr;
+	overflow: hidden;
+	background: rgba(255,255,255,.88);
+	border: 1px solid var(--vg-premium-line);
+	border-radius: 28px;
+	box-shadow: 0 14px 34px var(--vg-premium-shadow);
+}
+
+.kebab-signature-image {
+	position: relative;
+	min-height: 100%;
+	background: #f3eadf;
+	cursor: zoom-in;
+	overflow: hidden;
+}
+
+.kebab-signature-image img {
+	width: 100%;
+	height: 100%;
+	min-height: 290px;
+	display: block;
+	object-fit: cover;
+	object-position: center;
+}
+
+.kebab-signature-body {
+	padding: 22px 22px 20px;
+}
+
+.kebab-signature-title {
+	margin: 0;
+	color: #211d19 !important;
+	font-size: clamp(24px, 3vw, 30px);
+	line-height: 1.1;
+	font-weight: 800;
+	letter-spacing: 0;
+}
+
+.kebab-signature-desc {
+	margin-top: 11px;
+	color: #6f665e;
+	font-size: 16px;
+	line-height: 1.55;
+}
+
+.kebab-signature-desc p {
+	margin: 0;
+}
+
+.kebab-signature-meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.kebab-portion-list {
+	display: grid;
+	gap: 8px;
+	margin-top: 18px;
+}
+
+.kebab-portion-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 66px;
+	padding: 11px 13px;
+	background: rgba(255,253,249,.86);
+	border: 1px solid var(--vg-premium-line);
+	border-radius: 17px;
+}
+
+.kebab-portion-copy {
+	min-width: 0;
+}
+
+.kebab-portion-copy strong {
+	display: block;
+	color: var(--vg-premium-ink);
+	font-size: 15px;
+	line-height: 1.15;
+	font-weight: 800;
+}
+
+.kebab-portion-copy small {
+	display: block;
+	margin-top: 4px;
+	color: var(--vg-premium-muted);
+	font-size: 12px;
+	line-height: 1.25;
+}
+
+.kebab-portion-action {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 10px;
+	flex: 0 0 auto;
+}
+
+.kebab-portion-price {
+	color: var(--vg-premium-gold-dark);
+	font-size: 16px;
+	font-weight: 800;
+	white-space: nowrap;
+}
+
+.kebab-portion-add {
+	padding: 9px 13px !important;
+	min-height: 0 !important;
+	font-size: 12px !important;
+	line-height: 1 !important;
+}
+
+@media (max-width: 767px) {
+	.kebab-signature-card {
+		grid-template-columns: minmax(118px, 32%) 1fr;
+		border-radius: 24px;
+	}
+
+	.kebab-signature-image img {
+		min-height: 100%;
+		height: 100%;
+	}
+
+	.kebab-signature-body {
+		padding: 15px 14px;
+	}
+
+	.kebab-signature-title {
+		font-size: 21px;
+	}
+
+	.kebab-signature-desc {
+		margin-top: 8px;
+		font-size: 12.5px;
+		line-height: 1.42;
+	}
+
+	.kebab-signature-meta {
+		margin-top: 10px;
+		gap: 6px;
+	}
+
+	.kebab-portion-list {
+		margin-top: 11px;
+		gap: 6px;
+	}
+
+	.kebab-portion-row {
+		min-height: 50px;
+		padding: 8px 10px;
+	}
+
+	.kebab-portion-copy strong {
+		font-size: 13.5px;
+	}
+
+	.kebab-portion-copy small {
+		margin-top: 2px;
+		font-size: 11px;
+	}
+
+	.kebab-portion-action {
+		flex-direction: row;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.kebab-portion-price {
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 430px) {
+	.kebab-signature-card {
+		grid-template-columns: 34% 1fr;
+	}
+
+	.kebab-signature-body {
+		padding: 13px 12px;
+	}
+
+	.kebab-signature-title {
+		font-size: 19px;
+	}
+
+	.kebab-signature-desc {
+		font-size: 12px;
+	}
+
+	.kebab-signature-meta .food-chip:nth-child(n+2) {
+		display: none;
+	}
+
+	.kebab-portion-row {
+		min-height: 48px;
+		padding: 7px 9px;
+	}
+
+	.kebab-portion-copy strong {
+		font-size: 13px;
+	}
+
+	.kebab-portion-copy small {
+		font-size: 10px;
+	}
+
+	.kebab-portion-price {
+		font-size: 13px;
+	}
+}
+
 @media (max-width: 390px), (max-height: 780px) {
 	.home-entry-page .page-wrap {
 		padding-top: 18px !important;

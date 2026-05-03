@@ -114,7 +114,64 @@
                <div class="most_sale px-3 pb-4">
                   <div class="encok-grid">
 
-                     {% for product in category.products %}
+                     {% if category.product_groups %}
+                     {% for group in category.product_groups %}
+                     <div class="kebab-signature-card">
+                        <div class="kebab-signature-image menu-image-zoom"
+                             onclick="openMenuLightbox('{{ group.popup }}?v=21', '{{ group.name|e('js') }}', '{{ group.variants[0].product_id }}', '{{ category.name|e('js') }}')">
+                           <img src="{{ group.thumb }}?v=20" alt="{{ group.name }}" loading="lazy" decoding="async">
+                        </div>
+
+                        <div class="kebab-signature-body">
+                           <h6 class="kebab-signature-title">{{ group.name }}</h6>
+                           {% if group.description %}
+                           <div class="kebab-signature-desc">{{ group.description|raw }}</div>
+                           {% endif %}
+
+                           <div class="kebab-signature-meta">
+                              {% if group.tag %}
+                              <span class="food-chip">
+                                 <i class="feather-clock"></i>&nbsp;{{ group.tag }}
+                              </span>
+                              {% endif %}
+                              <span class="food-chip">Süt Kuzu Tandır</span>
+                           </div>
+
+                           <div class="kebab-portion-list">
+                              {% for variant in group.variants %}
+                              <div class="kebab-portion-row"
+                                   data-product-id="{{ variant.product_id }}"
+                                   data-product-name="{{ variant.name|e }}"
+                                   data-category-id="{{ category.category_id }}"
+                                   data-category-name="{{ category.name|e }}">
+                                 <div class="kebab-portion-copy">
+                                    <strong>{{ variant.portion_label }}</strong>
+                                    <small>{{ variant.portion_note }}</small>
+                                 </div>
+                                 <div class="kebab-portion-action">
+                                    <span class="kebab-portion-price">{{ variant.price }}</span>
+                                    {% if can_order and not variant.is_upcoming %}
+                                    <button type="button"
+                                            class="order-add-btn kebab-portion-add"
+                                            data-product-id="{{ variant.product_id }}">
+                                       {{ text_menu_add }}
+                                    </button>
+                                    {% endif %}
+                                 </div>
+                              </div>
+                              {% endfor %}
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                     {% endif %}
+
+                     {% if category.display_products is defined %}
+                     {% set visible_products = category.display_products %}
+                     {% else %}
+                     {% set visible_products = category.products %}
+                     {% endif %}
+                     {% for product in visible_products %}
                      <div class="encok-card category-product-card"
                           data-product-id="{{ product.product_id }}"
                           data-product-name="{{ product.name|e }}"
