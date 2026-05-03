@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="{{ language_code == 'en-gb' ? 'en' : 'tr' }}">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="{{ description }}">
+      <meta name="author" content="Varol Gurme">
+      <link rel="icon" type="image/png" href="{{ logo }}">
+      <title>{{ title }}</title>
+
+      <!-- Slick Slider -->
+      <link rel="stylesheet" type="text/css" href="{{ serv }}vendor/slick/slick.min.css"/>
+      <link rel="stylesheet" type="text/css" href="{{ serv }}vendor/slick/slick-theme.min.css"/>
+      <!-- Feather Icon-->
+      <link href="{{ serv }}vendor/icons/feather.css" rel="stylesheet" type="text/css">
+      <!-- Bootstrap core CSS -->
+      <link href="{{ serv }}vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="{{ serv }}css/menu-themes.css?v=4" rel="stylesheet">
+      <link href="{{ serv }}css/style.css?v=44" rel="stylesheet">
+      {{ restaurant_analytics_code|raw }}
+      <!-- Sidebar CSS -->
+      <link href="{{ serv }}vendor/sidebar/demo.css" rel="stylesheet">
+
+
+   </head>
+   <body class="menu-theme-{{ restaurant_menu_theme }}">
+      <div class="osahan-home-page">
+         <div class="osahan-main">
+
+            <!-- Categories -->
+            <div class="cat-slider border-bottom">
+               {% for category in categories %}
+               <div class="cat-item">
+                  <a href="{{ category.href }}" class="menu-transition-link{% if category.is_ai_menu %} ai-menu-link{% endif %}" data-category-id="{{ category.category_id }}" data-category-name="{{ category.name }}">
+                     <span class="cat-thumb-ring">
+                        <span class="cat-thumb-inner">
+                           <img src="{{ category.thumb }}?v=2" alt="{{ category.name }}">
+                        </span>
+                     </span>
+                     <span class="cat-label">{{ category.name }}</span>
+                  </a>
+               </div>
+               {% endfor %}
+            </div>
+
+            <div class="px-3 pt-3 title d-flex align-items-center">
+               <h6 class="m-0 font-weight-bold">{{ yoreselname ? yoreselname : text_regional_products }}</h6>
+               {% if restaurant_wifi_password %}
+               <button type="button" class="menu-wifi-action ml-auto" onclick="openMenuWifiModal()" aria-label="WiFi şifresi">
+                  <i class="feather-wifi"></i>
+               </button>
+               {% endif %}
+            </div>
+
+            <div class="trending-slider">
+               {% for pro in yoreselpro %}
+               <div class="osahan-slider-item py-3 px-1">
+                  <div class="list-card yoresel-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm"
+                       data-product-id="{{ pro.product_id }}"
+                       data-product-name="{{ pro.name|e }}"
+                       data-section-name="{{ yoreselname ? yoreselname|e : text_regional_products|e }}">
+                     <div class="yoresel-card-inner">
+                        <div class="list-card-image yoresel-image-wrap menu-image-zoom"
+                             onclick="openMenuLightbox('{{ pro.thumb }}', '{{ pro.name|e('js') }}', '{{ pro.product_id }}', '{{ yoreselname ? yoreselname|e('js') : text_regional_products|e('js') }}')">
+                          
+                           <img src="{{ pro.thumb }}" class="img-fluid item-img w-100" alt="{{ pro.name }}"/>
+                           {% if pro.is_upcoming %}
+                           <span class="coming-soon-badge">{{ text_coming_soon }}</span>
+                           {% endif %}
+                           
+                        </div>
+
+                        <div class="yoresel-content">
+                           <div class="yoresel-head">
+                              <div class="list-card-body">
+                                 <h6 class="mb-1 text-black yoresel-title">{{ pro.name }}</h6>
+                                 {% if pro.is_upcoming %}
+                                 <div class="coming-soon-note">{{ text_coming_soon_note }}</div>
+                                 {% endif %}
+
+                                 {% if pro.description %}
+                                 <div class="text-gray yoresel-desc-preview">{{ pro.description|raw }}</div>
+                                 {% endif %}
+                              </div>
+                           </div>
+
+                           <div class="yoresel-meta-row">
+                              <div class="yoresel-left-meta">
+                                 {% if pro.tag %}
+                                 <span class="food-chip">
+                                    <i class="feather-clock"></i>&nbsp;{{ pro.tag }}
+                                 </span>
+                                 {% endif %}
+
+                                 {% if pro.upc %}
+                                 <span class="food-chip">
+                                    <i class="feather-fire"></i>&nbsp;
+                                    <img src="image/kcal.png" width="14" alt="kcal">
+                                    {{ pro.upc }} <b>Kcal</b>
+                                    {% if pro.ean %}&nbsp;<b>P</b>&nbsp;{{ pro.ean }}{% endif %}
+                                    {% if pro.jan %}&nbsp;<b>C</b>&nbsp;{{ pro.jan }}{% endif %}
+                                    {% if pro.isbn %}&nbsp;<b>F</b>&nbsp;{{ pro.isbn }}{% endif %}
+                                 </span>
+                                 {% endif %}
+                              </div>
+
+                              {% if pro.options %}
+                              <div class="yoresel-option-icons">
+                                 {% for opt in pro.options %}
+                                 <img
+                                    data-toggle="tooltip"
+                                    src="{{ opt.img }}"
+                                    title="{{ opt.name }}"
+                                    alt="{{ opt.name }}"
+                                    class="img-fluid item-img"
+                                 >
+                                 {% endfor %}
+                              </div>
+                              {% endif %}
+                           </div>
+
+                           <div class="list-card-badge mt-3 order-price-row">
+   <small class="food-price yoresel-price">{{ pro.price }}</small>
+
+   {% if can_order and not pro.is_upcoming %}
+   <button type="button"
+           class="order-add-btn"
+           data-product-id="{{ pro.product_id }}">
+      {{ text_menu_add }}
+   </button>
+   {% endif %}
+</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+
+            <div class="px-3 pt-4 pb-3 title d-flex align-items-center">
+               <h6 class="m-0 font-weight-bold">{{ encoktercihname ? encoktercihname : text_most_preferred }}</h6>
+            </div>
+
+            <div class="most_sale px-3 pb-5">
+               <div class="encok-grid">
+                  {% for product in encoktercihpro %}
+                  <div class="encok-card"
+                       data-product-id="{{ product.product_id }}"
+                       data-product-name="{{ product.name|e }}"
+                       data-section-name="{{ encoktercihname ? encoktercihname|e : text_most_preferred|e }}">
+                     <div class="encok-image menu-image-zoom"
+                          onclick="openMenuLightbox('{{ product.thumb }}', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ encoktercihname ? encoktercihname|e('js') : text_most_preferred|e('js') }}')">
+                        <img src="{{ product.thumb }}" class="img-fluid item-img w-100" alt="{{ product.name }}">
+                        {% if product.is_upcoming %}
+                        <span class="coming-soon-badge">{{ text_coming_soon }}</span>
+                        {% endif %}
+                        
+                     </div>
+
+                     <div class="encok-content">
+                        <div class="encok-top">
+                           <h6 class="mb-1">{{ product.name }}</h6>
+                           {% if product.is_upcoming %}
+                           <div class="coming-soon-note">{{ text_coming_soon_note }}</div>
+                           {% endif %}
+
+                           {% if product.description %}
+                           <div class="encok-desc-wrap">
+                              <div class="text-gray encok-desc js-encok-desc">{{ product.description|raw }}</div>
+                              <button type="button" class="encok-desc-toggle" onclick="toggleEncokDesc(this)">{{ text_view_more }}</button>
+                           </div>
+                           {% endif %}
+                        </div>
+
+                        <div class="encok-bottom">
+                           <div class="encok-meta">
+                              <div class="encok-tags">
+                                 {% if product.tag %}
+                                 <span class="food-chip">
+                                    <i class="feather-clock"></i>&nbsp;{{ product.tag }}
+                                 </span>
+                                 {% endif %}
+
+                                 {% if product.upc %}
+                                 <span class="food-chip">
+                                    <i class="feather-fire"></i>&nbsp;
+                                    <img src="image/kcal.png" width="14" alt="kcal">
+                                    {{ product.upc }} <b>Kcal</b>
+                                    {% if product.ean %}&nbsp;<b>P</b>&nbsp;{{ product.ean }}{% endif %}
+                                    {% if product.jan %}&nbsp;<b>C</b>&nbsp;{{ product.jan }}{% endif %}
+                                    {% if product.isbn %}&nbsp;<b>F</b>&nbsp;{{ product.isbn }}{% endif %}
+                                 </span>
+                                 {% endif %}
+                              </div>
+ <div class="order-price-row">
+      <small class="food-price encok-price">{{ product.price }}</small>
+
+      {% if can_order and not product.is_upcoming %}
+      <button type="button"
+              class="order-add-btn"
+              data-product-id="{{ product.product_id }}">
+         {{ text_menu_add }}
+      </button>
+      {% endif %}
+   </div>
+</div>
+
+                           {% if product.options %}
+                           <div class="encok-options">
+                              {% for opt in product.options %}
+                              <img
+                                 data-toggle="tooltip"
+                                 src="{{ opt.img }}"
+                                 title="{{ opt.name }}"
+                                 alt="{{ opt.name }}"
+                                 class="img-fluid item-img"
+                              >
+                              {% endfor %}
+                           </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+            </div>
+
+            {% if newestpro %}
+            <div class="px-3 pt-2 pb-3 title d-flex align-items-center">
+               <h6 class="m-0 font-weight-bold">{{ text_newest_products }}</h6>
+            </div>
+
+            <div class="most_sale px-3 pb-5">
+               <div class="encok-grid">
+                  {% for product in newestpro %}
+                  <div class="encok-card"
+                       data-product-id="{{ product.product_id }}"
+                       data-product-name="{{ product.name|e }}"
+                       data-section-name="{{ text_newest_products|e }}">
+                     <div class="encok-image menu-image-zoom"
+                          onclick="openMenuLightbox('{{ product.thumb }}', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ text_newest_products|e('js') }}')">
+                        <img src="{{ product.thumb }}" class="img-fluid item-img w-100" alt="{{ product.name }}">
+                        {% if product.is_upcoming %}
+                        <span class="coming-soon-badge">{{ text_coming_soon }}</span>
+                        {% endif %}
+                     </div>
+
+                     <div class="encok-content">
+                        <div class="encok-top">
+                           <h6 class="mb-1">{{ product.name }}</h6>
+                           {% if product.is_upcoming %}
+                           <div class="coming-soon-note">{{ text_coming_soon_note }}</div>
+                           {% endif %}
+
+                           {% if product.description %}
+                           <div class="encok-desc-wrap">
+                              <div class="text-gray encok-desc js-encok-desc">{{ product.description|raw }}</div>
+                              <button type="button" class="encok-desc-toggle" onclick="toggleEncokDesc(this)">{{ text_view_more }}</button>
+                           </div>
+                           {% endif %}
+                        </div>
+
+                        <div class="encok-bottom">
+                           <div class="encok-meta">
+                              <div class="encok-tags">
+                                 {% if product.tag %}
+                                 <span class="food-chip">
+                                    <i class="feather-clock"></i>&nbsp;{{ product.tag }}
+                                 </span>
+                                 {% endif %}
+
+                                 {% if product.upc %}
+                                 <span class="food-chip">
+                                    <i class="feather-fire"></i>&nbsp;
+                                    <img src="image/kcal.png" width="14" alt="kcal">
+                                    {{ product.upc }} <b>Kcal</b>
+                                    {% if product.ean %}&nbsp;<b>P</b>&nbsp;{{ product.ean }}{% endif %}
+                                    {% if product.jan %}&nbsp;<b>C</b>&nbsp;{{ product.jan }}{% endif %}
+                                    {% if product.isbn %}&nbsp;<b>F</b>&nbsp;{{ product.isbn }}{% endif %}
+                                 </span>
+                                 {% endif %}
+                              </div>
+
+                              <div class="order-price-row">
+                                 <small class="food-price encok-price">{{ product.price }}</small>
+
+                                 {% if can_order and not product.is_upcoming %}
+                                 <button type="button"
+                                         class="order-add-btn"
+                                         data-product-id="{{ product.product_id }}">
+                                    {{ text_menu_add }}
+                                 </button>
+                                 {% endif %}
+                              </div>
+                           </div>
+
+                           {% if product.options %}
+                           <div class="encok-options">
+                              {% for opt in product.options %}
+                              <img
+                                 data-toggle="tooltip"
+                                 src="{{ opt.img }}"
+                                 title="{{ opt.name }}"
+                                 alt="{{ opt.name }}"
+                                 class="img-fluid item-img"
+                              >
+                              {% endfor %}
+                           </div>
+                           {% endif %}
+                        </div>
+                     </div>
+                  </div>
+                  {% endfor %}
+               </div>
+            </div>
+            {% endif %}
+
+         </div>
+      </div>
+
+      <div class="menu-lightbox" id="menuLightbox" onclick="closeMenuLightbox(event)">
+         <div class="menu-lightbox-inner">
+            <button type="button" class="menu-lightbox-close" aria-label="{{ text_modal_close }}" onclick="forceCloseMenuLightbox()">×</button>
+            <img src="" alt="" class="menu-lightbox-img" id="menuLightboxImg">
+         </div>
+      </div>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="{{ serv }}vendor/jquery/jquery.min.js"></script>
+      <script src="{{ serv }}vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- slick Slider JS-->
+      <script type="text/javascript" src="{{ serv }}vendor/slick/slick.min.js"></script>
+      <!-- Sidebar JS-->
+      <script type="text/javascript" src="{{ serv }}vendor/sidebar/hc-offcanvas-nav.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="{{ serv }}js/osahan.js?v=2"></script>
+
+      <script>
+      function trackMenuAnalytics(eventName, params) {
+         if (typeof gtag === 'function') {
+            gtag('event', eventName, params || {});
+         }
+      }
+
+      function openMenuLightbox(src, alt, productId, sectionName) {
+         var lightbox = document.getElementById('menuLightbox');
+         var img = document.getElementById('menuLightboxImg');
+
+         if (!lightbox || !img) return;
+
+         trackMenuAnalytics('product_view', {
+            product_id: productId || '',
+            product_name: alt || '',
+            section_name: sectionName || ''
+         });
+
+         img.src = src;
+         img.alt = alt || '';
+         lightbox.classList.add('open');
+         document.body.style.overflow = 'hidden';
+      }
+
+      function closeMenuLightbox(event) {
+         if (event.target.id === 'menuLightbox') {
+            forceCloseMenuLightbox();
+         }
+      }
+
+      function forceCloseMenuLightbox() {
+         var lightbox = document.getElementById('menuLightbox');
+         var img = document.getElementById('menuLightboxImg');
+
+         if (!lightbox || !img) return;
+
+         lightbox.classList.remove('open');
+         img.src = '';
+         img.alt = '';
+         document.body.style.overflow = '';
+      }
+
+      function toggleEncokDesc(button) {
+         var wrap = button.closest('.encok-desc-wrap');
+         if (!wrap) return;
+
+         var desc = wrap.querySelector('.js-encok-desc');
+         if (!desc) return;
+
+         if (desc.classList.contains('expanded')) {
+            desc.classList.remove('expanded');
+            button.innerText = '{{ text_view_more|e('js') }}';
+         } else {
+            desc.classList.add('expanded');
+            button.innerText = '{{ text_view_less|e('js') }}';
+         }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+         trackMenuAnalytics('menu_home_view', {
+            page_name: 'QR Menu Home'
+         });
+
+         var wraps = document.querySelectorAll('.encok-desc-wrap');
+
+         wraps.forEach(function(wrap) {
+            var desc = wrap.querySelector('.js-encok-desc');
+            var btn = wrap.querySelector('.encok-desc-toggle');
+
+            if (!desc || !btn) return;
+
+            setTimeout(function() {
+               if (desc.scrollHeight > desc.clientHeight + 4) {
+                  btn.style.display = 'inline-block';
+               }
+            }, 50);
+         });
+
+         document.querySelectorAll('a.menu-transition-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+               if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || link.target === '_blank') {
+                  return;
+               }
+
+               var href = link.getAttribute('href');
+
+               if (!href || href === '#') {
+                  return;
+               }
+
+               trackMenuAnalytics('category_select', {
+                  category_id: link.getAttribute('data-category-id') || '',
+                  category_name: link.getAttribute('data-category-name') || ''
+               });
+
+               e.preventDefault();
+               document.body.classList.add('menu-page-leaving');
+
+               setTimeout(function() {
+                  window.location.href = href;
+               }, 180);
+            });
+         });
+
+         var floatingTop = document.getElementById('floatingMenuTop');
+
+         if (floatingTop) {
+            var updateFloatingTop = function() {
+               if (window.pageYOffset > 140) {
+                  floatingTop.classList.add('is-visible');
+               } else {
+                  floatingTop.classList.remove('is-visible');
+               }
+            };
+
+            floatingTop.addEventListener('click', function(e) {
+               e.preventDefault();
+               window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            window.addEventListener('scroll', updateFloatingTop, { passive: true });
+            updateFloatingTop();
+         }
+      });
+
+      document.addEventListener('keydown', function(e) {
+         if (e.key === 'Escape') {
+            forceCloseMenuLightbox();
+         }
+      });
+      </script>
+ {% if can_track_order %}
+<div id="menuOrderBar" class="menu-order-bar" style="display:none;">
+   <button type="button" class="menu-order-bar-btn" id="menuOrderBarBtn">
+      <span class="menu-order-bar-text">
+         <strong id="menuOrderCount">{{ text_menu_order }}</strong>
+         <small id="menuOrderTable">{{ text_table }} {{ table_no }}</small>
+      </span>
+      <span class="menu-order-bar-action">{{ text_menu_choices }}</span>
+   </button>
+</div>
+
+<div id="menuOrderModal" class="menu-order-modal" style="display:none;">
+   <div class="menu-order-backdrop"></div>
+
+   <div class="menu-order-sheet">
+      <div class="menu-order-sheet-head">
+   <div>
+      <h3>{{ text_menu_choices }}</h3>
+      <p>{{ text_table }} {{ table_no }}</p>
+   </div>
+
+   <button type="button"
+      class="menu-order-close"
+      id="menuOrderClose"
+      aria-label="{{ text_modal_close }}">×</button>
+</div>
+
+<div id="menuOrderInfoText"
+style="
+margin:12px 0 16px;
+font-size:13px;
+color:#6d7d74;
+display:none;
+">
+{{ text_active_order_info }}
+</div>
+    <div id="menuOrderActiveWrap" class="menu-order-active-wrap"></div>
+      <div id="menuOrderItems" class="menu-order-items"></div>
+
+      <div id="menuOrderNoteWrap" class="menu-order-note-wrap">
+         <label for="menuOrderNote">{{ text_order_note }}</label>
+         <textarea id="menuOrderNote" class="menu-order-note" placeholder="{{ text_order_note_placeholder }}"></textarea>
+      </div>
+
+      <div id="menuOrderFooter" class="menu-order-sheet-foot">
+   <div class="menu-order-total">
+      <span>{{ text_new_order }}</span>
+      <strong id="menuOrderTotalQty">0</strong>
+   </div>
+
+   <div class="menu-order-actions">
+      <button type="button"
+              id="menuRequestBill"
+              class="menu-order-submit menu-order-submit-secondary"
+              style="display:none;">
+         {{ text_request_bill }}
+      </button>
+
+      <button type="button"
+              id="menuOrderSubmit"
+              class="menu-order-submit">
+         {{ text_send_order }}
+      </button>
+   </div>
+</div>
+   </div>
+</div>
+
+<div id="billPaymentModal" class="bill-payment-modal" style="display:none;">
+   <div class="bill-payment-backdrop"></div>
+   <div class="bill-payment-card">
+      <h4>{{ text_bill_payment_title }}</h4>
+      <p>{{ text_bill_payment_subtitle }}</p>
+      <button type="button" class="bill-payment-choice" data-payment-method="cash">{{ text_bill_payment_cash }}</button>
+      <button type="button" class="bill-payment-choice" data-payment-method="card">{{ text_bill_payment_card }}</button>
+      <button type="button" class="bill-payment-cancel">{{ text_bill_payment_cancel }}</button>
+   </div>
+</div>
+
+<div id="restaurantReviewModal" class="restaurant-review-modal" style="display:none;">
+   <div class="restaurant-review-backdrop"></div>
+   <div class="restaurant-review-card">
+      <button type="button" class="restaurant-review-close" id="restaurantReviewClose" aria-label="{{ text_modal_close }}">×</button>
+      <span class="restaurant-review-kicker">Bizi değerlendirin</span>
+      <h3>Deneyiminiz nasıldı?</h3>
+      <p id="restaurantReviewTable">{{ text_table }} {{ table_no }}</p>
+      <div class="restaurant-review-stars" id="restaurantReviewStars" aria-label="Yıldız seçimi">
+         <button type="button" data-rating="1">★</button>
+         <button type="button" data-rating="2">★</button>
+         <button type="button" data-rating="3">★</button>
+         <button type="button" data-rating="4">★</button>
+         <button type="button" data-rating="5">★</button>
+      </div>
+      <label for="restaurantReviewNote">Eklemek istediğiniz bir not var mı?</label>
+      <textarea id="restaurantReviewNote" placeholder="İsterseniz deneyiminizi birkaç cümleyle paylaşabilirsiniz."></textarea>
+      <div class="restaurant-review-actions">
+         <button type="button" id="restaurantReviewSkip" class="restaurant-review-secondary">Kapat</button>
+         <button type="button" id="restaurantReviewSend" class="restaurant-review-primary">Gönder</button>
+      </div>
+   </div>
+</div>
+
+<div id="menuOrderToast" class="menu-order-toast" style="display:none;"></div>
+{% endif %}
+{% if can_track_order %}
+<script>
+(function() {
+   var canQrOrder = {{ can_order ? 'true' : 'false' }};
+   var addEndpoint = '{{ menu_order_endpoint|e('js') }}';
+var updateEndpoint = 'index.php?route=common/menu_order/update';
+var summaryEndpoint = 'index.php?route=common/menu_order/summary';
+var submitEndpoint = 'index.php?route=common/menu_order/submit';
+var requestBillEndpoint = 'index.php?route=common/menu_order/requestBill';
+var requestWaiterEndpoint = 'index.php?route=common/menu_order/requestWaiter';
+var submitReviewEndpoint = 'index.php?route=common/menu_order/submitReview';
+
+var menuOrderLocale = {
+   orderTitle: '{{ text_menu_order|e('js') }}',
+   tableLabel: '{{ text_table|e('js') }}',
+   choices: '{{ text_menu_choices|e('js') }}',
+   add: '{{ text_menu_add|e('js') }}',
+   added: '{{ text_menu_added|e('js') }}',
+   orderNote: '{{ text_order_note|e('js') }}',
+   orderNotePlaceholder: '{{ text_order_note_placeholder|e('js') }}',
+   activeOrderInfo: '{{ text_active_order_info|e('js') }}',
+   newOrder: '{{ text_new_order|e('js') }}',
+   additionalOrder: '{{ text_additional_order|e('js') }}',
+   requestBill: '{{ text_request_bill|e('js') }}',
+   billRequested: '{{ text_bill_requested|e('js') }}',
+   billRequestSeen: '{{ text_bill_request_seen|e('js') }}',
+   billPaymentCash: '{{ text_bill_payment_cash|e('js') }}',
+   billPaymentCard: '{{ text_bill_payment_card|e('js') }}',
+   sendOrder: '{{ text_send_order|e('js') }}',
+   orderSendFailed: '{{ text_order_send_failed|e('js') }}',
+   orderSent: '{{ text_order_sent|e('js') }}',
+   orderItemAddFailed: '{{ text_order_item_add_failed|e('js') }}',
+   orderItemAdded: '{{ text_order_item_added|e('js') }}',
+   requestBillFailed: '{{ text_request_bill_failed|e('js') }}',
+   waiterConfirm: '{{ text_waiter_confirm|e('js') }}',
+   waiterCallFailed: '{{ text_waiter_call_failed|e('js') }}',
+   waiterCalled: '{{ text_waiter_called|e('js') }}',
+   waiterCallWaiting: 'Garson çağrıldı',
+   waiterCallSeen: 'Garson çağrınızı gördü',
+   tableBill: '{{ text_table_bill|e('js') }}',
+   billSummary: '{{ text_bill_summary|e('js') }}',
+   activeOrdersTitle: '{{ text_active_orders|e('js') }}',
+   tableTotalLabel: '{{ text_table_total|e('js') }}',
+   orderStatusWaiting: '{{ text_order_waiting|e('js') }}',
+   orderStatusKitchen: '{{ text_order_in_kitchen|e('js') }}',
+   orderStatusReadyForService: '{{ text_order_ready_for_service|e('js') }}',
+   orderStatusOutForService: '{{ text_order_out_for_service|e('js') }}',
+   orderStatusServed: '{{ text_order_served|e('js') }}',
+   orderHistory: '{{ text_order_history|e('js') }}',
+   orderSentToWaiter: '{{ text_order_sent_to_waiter|e('js') }}'
+};
+var waiterCallPosting = false;
+var billRequestPosting = false;
+var reviewPosting = false;
+var currentReviewRating = 0;
+var reviewPromptVisible = false;
+
+function getBillRequestButtonText(state) {
+   return state && state.bill_request && state.bill_request.status == 'seen'
+      ? menuOrderLocale.billRequestSeen
+      : menuOrderLocale.billRequested;
+}
+
+function openBillPaymentModal() {
+   $('#billPaymentModal').fadeIn(120);
+}
+
+function closeBillPaymentModal() {
+   $('#billPaymentModal').fadeOut(120);
+}
+
+function submitBillRequest(paymentMethod) {
+   if (billRequestPosting) {
+      return;
+   }
+
+   var paymentLabel = paymentMethod === 'card' ? menuOrderLocale.billPaymentCard : menuOrderLocale.billPaymentCash;
+   billRequestPosting = true;
+   $('.bill-payment-choice').prop('disabled', true);
+
+   $.post(requestBillEndpoint, { note: 'Ödeme tercihi: ' + paymentLabel }, function(resp) {
+      if (!resp || !resp.success) {
+         toast(resp && resp.message ? resp.message : menuOrderLocale.requestBillFailed);
+         return;
+      }
+
+      closeBillPaymentModal();
+
+      if (resp.state) {
+         applyState(resp.state);
+      }
+
+      toast(resp.message || menuOrderLocale.orderSentToWaiter);
+   }, 'json').always(function() {
+      billRequestPosting = false;
+      $('.bill-payment-choice').prop('disabled', false);
+   });
+}
+
+function setReviewStars(rating) {
+   currentReviewRating = parseInt(rating, 10) || 0;
+   $('#restaurantReviewStars button').each(function() {
+      var value = parseInt($(this).attr('data-rating'), 10) || 0;
+      $(this).toggleClass('active', value <= currentReviewRating);
+   });
+}
+
+function openRestaurantReview(prompt) {
+   if (!prompt || !prompt.show || reviewPromptVisible) {
+      return;
+   }
+
+   reviewPromptVisible = true;
+   setReviewStars(prompt.rating || 0);
+   $('#restaurantReviewNote').val(prompt.note || '');
+   $('#restaurantReviewTable').text((prompt.table_name || (menuOrderLocale.tableLabel + ' ' + (prompt.table_no || ''))));
+   $('#restaurantReviewModal').fadeIn(160);
+}
+
+function closeRestaurantReview(saveClose) {
+   if (saveClose) {
+      submitRestaurantReview(true);
+      return;
+   }
+
+   $('#restaurantReviewModal').fadeOut(140);
+   reviewPromptVisible = false;
+}
+
+function submitRestaurantReview(closeAfter) {
+   if (reviewPosting) {
+      return;
+   }
+
+   reviewPosting = true;
+
+   $.post(submitReviewEndpoint, {
+      rating: currentReviewRating,
+      note: $('#restaurantReviewNote').val() || '',
+      close: closeAfter ? 1 : 0
+   }, function(resp) {
+      if (!resp || !resp.success) {
+         if (!closeAfter) {
+            toast(resp && resp.message ? resp.message : 'Değerlendirme kaydedilemedi.');
+         }
+         return;
+      }
+
+      if (closeAfter) {
+         $('#restaurantReviewModal').fadeOut(140);
+         reviewPromptVisible = false;
+         toast(resp.message || 'Teşekkür ederiz.');
+      }
+   }, 'json').always(function() {
+      reviewPosting = false;
+   });
+}
+
+   function toast(message) {
+      var el = document.getElementById('menuOrderToast');
+      if (!el) return;
+      el.textContent = message;
+      el.style.display = 'block';
+      setTimeout(function() {
+         el.style.display = 'none';
+      }, 2600);
+   }
+
+   function updateBar(state) {
+      var bar = document.getElementById('menuOrderBar');
+      var count = document.getElementById('menuOrderCount');
+      var totalQty = document.getElementById('menuOrderTotalQty');
+
+      if (!bar || !count || !totalQty) return;
+
+      if ((!state.cart.total_qty || state.cart.total_qty == 0) && !state.has_open_orders) {
+         bar.style.display = 'none';
+         document.body.classList.remove('has-order-bar');
+         count.textContent = menuOrderLocale.choices;
+         totalQty.textContent = '0';
+         return;
+      }
+
+      bar.style.display = 'block';
+    document.body.classList.add('has-order-bar');
+      if (state.has_open_orders) {
+         count.textContent = menuOrderLocale.orderTitle;
+      } else {
+         count.textContent = menuOrderLocale.newOrder;
+      }
+
+     if(state.has_open_orders && (!state.cart.total_qty || state.cart.total_qty==0)){
+   totalQty.textContent='';
+}else{
+   totalQty.textContent=state.cart.total_qty || 0;
+}
+   }
+
+   function getOrderStatusText(status) {
+      return status == 'waiting_order'
+         ? menuOrderLocale.orderStatusWaiting
+         : status == 'in_kitchen'
+         ? menuOrderLocale.orderStatusKitchen
+         : status == 'ready_for_service'
+         ? menuOrderLocale.orderStatusReadyForService
+         : status == 'out_for_service'
+         ? menuOrderLocale.orderStatusOutForService
+         : status == 'served'
+         ? menuOrderLocale.orderStatusServed
+         : status;
+   }
+
+   function getOrderTimelineIndex(status) {
+      if (status == 'waiting_order') return 0;
+      if (status == 'in_kitchen') return 1;
+      if (status == 'ready_for_service' || status == 'out_for_service') return 2;
+      if (status == 'served') return 3;
+
+      return 0;
+   }
+
+   function renderOrderTimeline(order) {
+      var activeIndex = getOrderTimelineIndex(order.status);
+      var serviceLabel = order.status == 'out_for_service'
+         ? menuOrderLocale.orderStatusOutForService
+         : menuOrderLocale.orderStatusReadyForService;
+      var steps = [
+         menuOrderLocale.orderStatusWaiting,
+         menuOrderLocale.orderStatusKitchen,
+         serviceLabel,
+         menuOrderLocale.orderStatusServed
+      ];
+      var html = '<div class="menu-order-timeline status-' + order.status + '">';
+
+      steps.forEach(function(label, index) {
+         var cls = index < activeIndex ? 'done' : (index == activeIndex ? 'current' : 'pending');
+         html += '<div class="menu-order-timeline-step ' + cls + '">';
+         html += '<span></span>';
+         html += '<small>' + label + '</small>';
+         html += '</div>';
+      });
+
+      html += '</div>';
+
+      return html;
+   }
+
+   function renderActiveOrders(state) {
+
+   var wrap = document.getElementById('menuOrderActiveWrap');
+   if (!wrap) return;
+
+   if (!state || !state.has_open_orders || !state.active_orders || !state.active_orders.length) {
+      wrap.innerHTML='';
+      return;
+   }
+
+   var html = '<div class="menu-order-active-title">' + menuOrderLocale.activeOrdersTitle + '</div>';
+
+   if (state.table_total) {
+      html += '<div class="menu-order-table-total">';
+      html += '<span>' + menuOrderLocale.tableTotalLabel + '</span>';
+      html += '<strong>' + state.table_total + '</strong>';
+      html += '</div>';
+   }
+
+   state.active_orders.forEach(function(order){
+
+      html += '<div class="menu-order-history-card status-' + order.status + '">';
+      html += '<div class="menu-order-history-head">';
+      html += '<div class="menu-order-history-time">' + menuOrderLocale.orderHistory + ' ' + order.time + '</div>';
+      html += '<div class="menu-order-history-status">' + getOrderStatusText(order.status) + '</div>';
+      html += '</div>';
+      html += renderOrderTimeline(order);
+
+      if (order.status === 'in_kitchen' && order.prep_minutes) {
+         html += '<div class="menu-order-prep-timer" data-deadline="' + (order.prep_deadline_ts || 0) + '">';
+         html += '<span>Tahmini süre</span>';
+         html += '<strong>' + (order.prep_label || (order.prep_minutes + ' dk')) + '</strong>';
+
+         if (order.prep_deadline_ts) {
+            html += '<em class="js-customer-prep-countdown">' + formatCustomerPrepRemaining(order.prep_deadline_ts) + '</em>';
+         }
+
+         html += '</div>';
+      }
+
+      order.items.forEach(function(item){
+         html += '<div class="menu-order-history-item">'
+              + item.name + ' x' + item.qty +
+              '</div>';
+      });
+
+      html += '</div>';
+
+   });
+
+   wrap.innerHTML = html;
+}
+
+function formatCustomerPrepRemaining(deadlineTs) {
+   deadlineTs = parseInt(deadlineTs, 10) || 0;
+
+   if (!deadlineTs) {
+      return '';
+   }
+
+   var remaining = Math.floor((deadlineTs * 1000 - Date.now()) / 1000);
+   var overdue = remaining < 0;
+   remaining = Math.abs(remaining);
+
+   var minutes = Math.floor(remaining / 60);
+   var seconds = remaining % 60;
+   var text = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+
+   return overdue ? '-' + text : text;
+}
+
+function tickCustomerPrepCountdowns() {
+   var timers = document.querySelectorAll('.menu-order-prep-timer[data-deadline]');
+
+   timers.forEach(function(timer) {
+      var countdown = timer.querySelector('.js-customer-prep-countdown');
+      var deadline = parseInt(timer.getAttribute('data-deadline'), 10) || 0;
+
+      if (!countdown || !deadline) {
+         return;
+      }
+
+      countdown.textContent = formatCustomerPrepRemaining(deadline);
+
+      if ((deadline * 1000 - Date.now()) < 0) {
+         timer.classList.add('overdue');
+      } else {
+         timer.classList.remove('overdue');
+      }
+   });
+}
+
+   function renderCart(summary) {
+      var wrap = document.getElementById('menuOrderItems');
+      if (!wrap) return;
+
+      if (!summary || !summary.items || !summary.items.length) {
+         wrap.innerHTML = '';
+         return;
+      }
+
+      var html = '';
+
+      summary.items.forEach(function(item) {
+         html += ''
+         + '<div class="menu-order-item">'
+         + '  <div>'
+         + '    <div class="menu-order-item-name">' + item.name + '</div>'
+         + '    <div class="menu-order-item-meta">' + item.price + '</div>'
+         + '  </div>'
+         + '  <div class="menu-order-qty">'
+         + '    <button type="button" class="menu-order-minus" data-product-id="' + item.product_id + '" data-qty="' + item.quantity + '">-</button>'
+         + '    <strong>' + item.quantity + '</strong>'
+         + '    <button type="button" class="menu-order-plus" data-product-id="' + item.product_id + '" data-qty="' + item.quantity + '">+</button>'
+         + '  </div>'
+         + '</div>';
+      });
+
+      wrap.innerHTML = html;
+   }
+
+   function applyState(state) {
+   if (!state) return;
+
+   updateBar(state);
+   renderActiveOrders(state);
+   renderCart(state.cart || {});
+   updateWaiterCallButton(state);
+
+   if (state.review_prompt && state.review_prompt.show) {
+      openRestaurantReview(state.review_prompt);
+   }
+
+   var cartCount = 0;
+
+   if (state.cart && state.cart.items) {
+      cartCount = state.cart.items.length;
+   }
+
+   var noteWrap   = document.getElementById('menuOrderNoteWrap');
+   var footerWrap = document.getElementById('menuOrderFooter');
+   var infoText   = document.getElementById('menuOrderInfoText');
+   var modalTitle = document.querySelector('.menu-order-sheet-head h3');
+   var submitBtn  = document.getElementById('menuOrderSubmit');
+   var billBtn    = document.getElementById('menuRequestBill');
+   var canCreateOrder = !!(state.can_order || canQrOrder);
+
+   if (state.has_open_orders && cartCount === 0) {
+      if (modalTitle) {
+         modalTitle.innerHTML = menuOrderLocale.orderTitle;
+      }
+      if (noteWrap) {
+         noteWrap.style.display = 'none';
+      }
+
+      if (submitBtn) {
+         submitBtn.style.display = 'none';
+      }
+
+      var showBillButton = false;
+
+      if (billBtn) {
+         if (state.can_request_bill && !state.has_pending_bill_request) {
+            billBtn.style.display = 'inline-flex';
+            billBtn.textContent = menuOrderLocale.requestBill;
+            billBtn.disabled = false;
+            showBillButton = true;
+         } else if (state.has_pending_bill_request) {
+            billBtn.style.display = 'inline-flex';
+            billBtn.textContent = getBillRequestButtonText(state);
+            billBtn.disabled = true;
+            showBillButton = true;
+         } else {
+            billBtn.style.display = 'none';
+            billBtn.disabled = false;
+         }
+      }
+
+      if (footerWrap) {
+         footerWrap.style.display = showBillButton ? 'flex' : 'none';
+      }
+
+      if (infoText) {
+         infoText.style.display = 'block';
+      }
+
+   } else {
+      if (cartCount > 0) {
+         if (modalTitle) {
+            modalTitle.innerHTML = menuOrderLocale.additionalOrder;
+         }
+      } else {
+         if (modalTitle) {
+            modalTitle.innerHTML = menuOrderLocale.choices;
+         }
+      }
+
+      if (noteWrap) {
+         noteWrap.style.display = canCreateOrder ? '' : 'none';
+      }
+
+      if (submitBtn) {
+         submitBtn.style.display = canCreateOrder ? '' : 'none';
+      }
+
+      var showBillButtonInCartMode = false;
+
+      if (billBtn) {
+         if (state.can_request_bill && !state.has_pending_bill_request) {
+            billBtn.style.display = 'inline-flex';
+            billBtn.textContent = menuOrderLocale.requestBill;
+            billBtn.disabled = false;
+            showBillButtonInCartMode = true;
+         } else if (state.has_pending_bill_request) {
+            billBtn.style.display = 'inline-flex';
+            billBtn.textContent = getBillRequestButtonText(state);
+            billBtn.disabled = true;
+            showBillButtonInCartMode = true;
+         } else {
+            billBtn.style.display = 'none';
+            billBtn.disabled = false;
+         }
+      }
+
+      if (footerWrap) {
+         footerWrap.style.display = ((canCreateOrder && cartCount > 0) || showBillButtonInCartMode) ? 'flex' : 'none';
+      }
+
+      if (infoText) {
+         infoText.style.display = 'none';
+      }
+   }
+}
+
+function updateWaiterCallButton(state) {
+   var btn = document.getElementById('callWaiterBtn');
+   if (!btn) return;
+
+   var label = btn.querySelector('span');
+   var waiterCall = state && state.waiter_call ? state.waiter_call : {};
+
+   if (waiterCall && waiterCall.call_id) {
+      btn.classList.add('disabled');
+      btn.setAttribute('aria-disabled', 'true');
+      if (label) {
+         label.textContent = waiterCall.status === 'seen' ? menuOrderLocale.waiterCallSeen : menuOrderLocale.waiterCallWaiting;
+      }
+   } else {
+      btn.classList.remove('disabled');
+      btn.removeAttribute('aria-disabled');
+      if (label) {
+         label.textContent = '{{ text_call_waiter|e('js') }}';
+      }
+   }
+}
+
+   function refreshState(openIfHasItems) {
+      $.get(summaryEndpoint, function(resp) {
+         if (!resp || !resp.success) return;
+
+         applyState(resp.state);
+
+         if (openIfHasItems) {
+            $('#menuOrderModal').show();
+         }
+      }, 'json');
+   }
+
+   $(document).on('click', '.order-add-btn', function() {
+      var btn = $(this);
+      var productId = btn.data('product-id');
+      var card = btn.closest('.encok-card, .list-card');
+
+      $.post(addEndpoint, { product_id: productId }, function(resp) {
+         if (!resp || !resp.success) {
+            toast(resp && resp.message ? resp.message : menuOrderLocale.orderItemAddFailed);
+            return;
+         }
+
+         btn.addClass('added').text(menuOrderLocale.added);
+
+         setTimeout(function() {
+            btn.removeClass('added').text(menuOrderLocale.add);
+         }, 1200);
+
+         applyState(resp.state);
+         toast(resp.message || menuOrderLocale.orderItemAdded);
+         trackMenuAnalytics('add_to_order', {
+            product_id: productId || '',
+            product_name: card.data('product-name') || '',
+            section_name: card.data('section-name') || ''
+         });
+      }, 'json');
+   });
+
+   $('#menuOrderBarBtn').on('click', function() {
+      refreshState(true);
+   });
+
+   $('#menuOrderClose, .menu-order-backdrop').on('click', function() {
+      $('#menuOrderModal').hide();
+   });
+
+   $(document).on('click', '.menu-order-plus', function() {
+      var productId = $(this).data('product-id');
+      var qty = parseInt($(this).data('qty'), 10) || 0;
+
+      $.post(updateEndpoint, {
+         product_id: productId,
+         quantity: qty + 1
+      }, function(resp) {
+         if (resp && resp.success) {
+            applyState(resp.state);
+         }
+      }, 'json');
+   });
+
+   $(document).on('click', '.menu-order-minus', function() {
+      var productId = $(this).data('product-id');
+      var qty = parseInt($(this).data('qty'), 10) || 0;
+
+      $.post(updateEndpoint, {
+         product_id: productId,
+         quantity: qty - 1
+      }, function(resp) {
+         if (resp && resp.success) {
+            applyState(resp.state);
+         }
+      }, 'json');
+   });
+
+   $('#menuOrderSubmit').on('click', function() {
+      var note = $('#menuOrderNote').val() || '';
+
+      $.post(submitEndpoint, { note: note }, function(resp) {
+         if (!resp || !resp.success) {
+            toast(resp && resp.message ? resp.message : menuOrderLocale.orderSendFailed);
+            return;
+         }
+
+         $('#menuOrderNote').val('');
+         $('#menuOrderModal').hide();
+
+         if (resp.state) {
+            applyState(resp.state);
+         }
+
+         toast(resp.message || menuOrderLocale.orderSent);
+      }, 'json');
+   });
+$('#menuRequestBill').on('click', function() {
+   openBillPaymentModal();
+});
+
+$('.bill-payment-choice').on('click', function() {
+   submitBillRequest($(this).attr('data-payment-method'));
+});
+
+$('.bill-payment-cancel, .bill-payment-backdrop').on('click', function() {
+   closeBillPaymentModal();
+});
+
+$('#restaurantReviewStars button').on('click', function() {
+   setReviewStars($(this).attr('data-rating'));
+   submitRestaurantReview(false);
+});
+
+$('#restaurantReviewSend').on('click', function() {
+   closeRestaurantReview(true);
+});
+
+$('#restaurantReviewSkip, #restaurantReviewClose').on('click', function() {
+   closeRestaurantReview(true);
+});
+
+$(document).on('click', '#callWaiterBtn', function(e) {
+   e.preventDefault();
+
+   if (!e.originalEvent || e.originalEvent.isTrusted === false || waiterCallPosting) {
+      return;
+   }
+
+   if ($(this).hasClass('disabled')) {
+      return;
+   }
+
+   if(!confirm(menuOrderLocale.waiterConfirm)){
+      return;
+   }
+
+   var btn = $(this);
+   waiterCallPosting = true;
+   btn.addClass('disabled');
+
+   $.post(requestWaiterEndpoint, {}, function(resp) {
+      if (!resp || !resp.success) {
+         toast(resp && resp.message ? resp.message : menuOrderLocale.waiterCallFailed);
+         btn.removeClass('disabled');
+         return;
+      }
+
+      toast(resp.message || menuOrderLocale.waiterCalled);
+      if (resp.state) {
+         applyState(resp.state);
+      } else {
+         btn.addClass('disabled');
+      }
+   }, 'json').always(function() {
+      waiterCallPosting = false;
+   });
+});
+function watchMenuFooterVisibility(){
+	var footer = document.querySelector('#vvMenuFooterWatch');
+	if(!footer){
+		return;
+	}
+
+	function checkFooter(){
+		var rect = footer.getBoundingClientRect();
+		var windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+		if(rect.top < windowHeight && rect.bottom > 0){
+			document.body.classList.add('footer-visible');
+		}else{
+			document.body.classList.remove('footer-visible');
+		}
+	}
+
+	window.addEventListener('scroll', checkFooter, { passive:true });
+	window.addEventListener('resize', checkFooter);
+	checkFooter();
+}
+
+setTimeout(function(){
+	watchMenuFooterVisibility();
+}, 300);
+setInterval(tickCustomerPrepCountdowns, 1000);
+setInterval(function(){
+   refreshState(false);
+}, 10000);
+refreshState(false);
+})();
+</script>
+{% endif %}
+
+{% if restaurant_wifi_password %}
+<div id="menuWifiModal" class="menu-wifi-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="WiFi şifresi">
+   <div class="menu-wifi-backdrop"></div>
+   <div class="menu-wifi-sheet">
+      <button type="button" class="menu-wifi-close" onclick="closeMenuWifiModal()" aria-label="Kapat">&times;</button>
+      <div class="menu-wifi-icon"><i class="feather-wifi"></i></div>
+      {% if restaurant_wifi_name %}
+      <span>WiFi Ağı</span>
+      <strong class="menu-wifi-name">{{ restaurant_wifi_name }}</strong>
+      {% endif %}
+      <span>WiFi Şifresi</span>
+      <strong id="menuWifiPassword">{{ restaurant_wifi_password }}</strong>
+      <button type="button" id="menuWifiCopyBtn" class="menu-wifi-copy" onclick="copyMenuWifiPassword()">Şifreyi Kopyala</button>
+   </div>
+</div>
+<script>
+function openMenuWifiModal(){
+   var modal = document.getElementById('menuWifiModal');
+   var button = document.getElementById('menuWifiCopyBtn');
+   if(button){ button.textContent = 'Şifreyi Kopyala'; button.classList.remove('is-copied'); }
+   if(modal){
+      if(modal.parentNode !== document.body){ document.body.appendChild(modal); }
+      modal.classList.remove('is-closing');
+      modal.style.display = 'flex';
+   }
+}
+function closeMenuWifiModal(){
+   var modal = document.getElementById('menuWifiModal');
+   if(modal){ modal.classList.remove('is-closing'); modal.style.display = 'none'; }
+}
+function closeMenuWifiModalAnimated(){
+   var modal = document.getElementById('menuWifiModal');
+   if(!modal){ return; }
+   modal.classList.add('is-closing');
+   setTimeout(function(){ closeMenuWifiModal(); }, 260);
+}
+function markWifiCopied(){
+   var button = document.getElementById('menuWifiCopyBtn');
+   if(button){ button.textContent = 'Kopyalandı'; button.classList.add('is-copied'); }
+   setTimeout(function(){ closeMenuWifiModalAnimated(); }, 2000);
+}
+function copyMenuWifiPassword(){
+   var value = document.getElementById('menuWifiPassword') ? document.getElementById('menuWifiPassword').textContent : '';
+   if(navigator.clipboard && value){
+      navigator.clipboard.writeText(value).then(markWifiCopied).catch(markWifiCopied);
+   } else if(value) {
+      var temp = document.createElement('textarea');
+      temp.value = value;
+      document.body.appendChild(temp);
+      temp.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(temp);
+      markWifiCopied();
+   }
+}
+document.addEventListener('click', function(e){
+   if(e.target && e.target.classList && e.target.classList.contains('menu-wifi-backdrop')){
+      closeMenuWifiModal();
+   }
+});
+</script>
+{% endif %}
+
+{% if can_track_order %}
+<a href="javascript:void(0);"
+   id="callWaiterBtn"
+   class="floating-waiter-btn"
+   aria-label="{{ text_call_waiter }}">
+   <i class="feather-bell"></i>
+   <span>{{ text_call_waiter }}</span>
+</a>
+{% endif %}
+<a href="javascript:void(0);" id="floatingMenuTop" class="floating-home-btn floating-menu-top" aria-label="Sayfanın başına dön">
+   <span class="floating-nav-icon floating-nav-up">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+         <path fill-rule="evenodd" d="M8 3.293 2.646 8.646a.5.5 0 1 0 .708.708L7.5 5.207V13.5a.5.5 0 0 0 1 0V5.207l4.146 4.147a.5.5 0 0 0 .708-.708z"/>
+      </svg>
+   </span>
+</a>
+<div id="vvMenuFooterWatch">
+   {{ menu_footer }}
+</div>
+   </body>
+</html>

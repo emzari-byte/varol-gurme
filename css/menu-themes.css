@@ -1,0 +1,439 @@
+/*
+ * Customer menu visual themes.
+ * Default theme is intentionally untouched. v1-v5 are complete visual systems.
+ */
+
+.menu-theme-v1 {
+  --vg-page: #f4f7f0;
+  --vg-card: #fffefa;
+  --vg-text: #1f3328;
+  --vg-muted: #68766d;
+  --vg-accent: #315f45;
+  --vg-accent-2: #b89557;
+  --vg-border: rgba(49, 95, 69, .18);
+  --vg-soft: rgba(49, 95, 69, .08);
+  --vg-shadow: rgba(33, 61, 45, .12);
+}
+
+.menu-theme-v2 {
+  --vg-page: #101113;
+  --vg-card: #18191b;
+  --vg-text: #f4ead8;
+  --vg-muted: #b7ad9c;
+  --vg-accent: #c99b5b;
+  --vg-accent-2: #8f1f2c;
+  --vg-border: rgba(238, 213, 171, .16);
+  --vg-soft: rgba(201, 155, 91, .12);
+  --vg-shadow: rgba(0, 0, 0, .38);
+}
+
+.menu-theme-v3 {
+  --vg-page: #f7fbfb;
+  --vg-card: #ffffff;
+  --vg-text: #17323a;
+  --vg-muted: #607980;
+  --vg-accent: #1f7282;
+  --vg-accent-2: #d2a85d;
+  --vg-border: rgba(31, 114, 130, .17);
+  --vg-soft: rgba(31, 114, 130, .07);
+  --vg-shadow: rgba(24, 84, 96, .12);
+}
+
+.menu-theme-v4 {
+  --vg-page: #0c1018;
+  --vg-card: #151b27;
+  --vg-text: #f4efe5;
+  --vg-muted: #b9c0cc;
+  --vg-accent: #c8a15f;
+  --vg-accent-2: #6f8fb8;
+  --vg-border: rgba(255, 255, 255, .13);
+  --vg-soft: rgba(200, 161, 95, .13);
+  --vg-shadow: rgba(0, 0, 0, .42);
+}
+
+.menu-theme-v5 {
+  --vg-page: #fbf5ed;
+  --vg-card: #fffdf9;
+  --vg-text: #2b302d;
+  --vg-muted: #73776f;
+  --vg-accent: #4b6f62;
+  --vg-accent-2: #c56f4e;
+  --vg-border: rgba(75, 111, 98, .18);
+  --vg-soft: rgba(197, 111, 78, .09);
+  --vg-shadow: rgba(87, 65, 45, .13);
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] {
+  background: var(--vg-page) !important;
+  color: var(--vg-text);
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .osahan-home-page,
+body:not(.menu-theme-default)[class*="menu-theme-"] .fixed-bottom-bar,
+body:not(.menu-theme-default)[class*="menu-theme-"] .page-wrap {
+  background: var(--vg-page) !important;
+  color: var(--vg-text);
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .entry-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .list-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .encok-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .menu-order-sheet,
+body:not(.menu-theme-default)[class*="menu-theme-"] .bill-payment-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .feedback-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .menu-page-footer-inner {
+  background: var(--vg-card) !important;
+  color: var(--vg-text) !important;
+  border-color: var(--vg-border) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] h1,
+body:not(.menu-theme-default)[class*="menu-theme-"] h2,
+body:not(.menu-theme-default)[class*="menu-theme-"] h3,
+body:not(.menu-theme-default)[class*="menu-theme-"] h4,
+body:not(.menu-theme-default)[class*="menu-theme-"] h5,
+body:not(.menu-theme-default)[class*="menu-theme-"] h6,
+body:not(.menu-theme-default)[class*="menu-theme-"] .headline,
+body:not(.menu-theme-default)[class*="menu-theme-"] .cat-label,
+body:not(.menu-theme-default)[class*="menu-theme-"] .food-price,
+body:not(.menu-theme-default)[class*="menu-theme-"] .feedback-title {
+  color: var(--vg-text) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] p,
+body:not(.menu-theme-default)[class*="menu-theme-"] small,
+body:not(.menu-theme-default)[class*="menu-theme-"] .text-gray,
+body:not(.menu-theme-default)[class*="menu-theme-"] .feedback-subtitle,
+body:not(.menu-theme-default)[class*="menu-theme-"] .brand-tags,
+body:not(.menu-theme-default)[class*="menu-theme-"] .footer-note {
+  color: var(--vg-muted) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .order-add-btn,
+body:not(.menu-theme-default)[class*="menu-theme-"] .menu-order-submit,
+body:not(.menu-theme-default)[class*="menu-theme-"] .contact-btn,
+body:not(.menu-theme-default)[class*="menu-theme-"] .feedback-submit,
+body:not(.menu-theme-default)[class*="menu-theme-"] .floating-waiter-btn {
+  background: var(--vg-accent) !important;
+  color: #fff !important;
+  border: 0 !important;
+  box-shadow: 0 16px 28px var(--vg-shadow) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .food-chip,
+body:not(.menu-theme-default)[class*="menu-theme-"] .mini-badge,
+body:not(.menu-theme-default)[class*="menu-theme-"] .lang-card,
+body:not(.menu-theme-default)[class*="menu-theme-"] .feedback-btn {
+  background: var(--vg-card) !important;
+  color: var(--vg-text) !important;
+  border-color: var(--vg-border) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .cat-slider,
+body:not(.menu-theme-default)[class*="menu-theme-"] .category-topbar {
+  background: color-mix(in srgb, var(--vg-card) 86%, transparent) !important;
+  border-color: var(--vg-border) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .cat-thumb-ring,
+body:not(.menu-theme-default)[class*="menu-theme-"] .cat-thumb-inner,
+body:not(.menu-theme-default)[class*="menu-theme-"] .encok-options img,
+body:not(.menu-theme-default)[class*="menu-theme-"] .yoresel-option-icons img {
+  border-color: var(--vg-border) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .lang-card.primary,
+body:not(.menu-theme-default)[class*="menu-theme-"] .lang-card:hover {
+  border-color: var(--vg-accent) !important;
+}
+
+body:not(.menu-theme-default)[class*="menu-theme-"] .lang-arrow,
+body:not(.menu-theme-default)[class*="menu-theme-"] .brand-divider,
+body:not(.menu-theme-default)[class*="menu-theme-"] .divider {
+  background: var(--vg-accent) !important;
+}
+
+/* V1: Garden fine dining */
+.menu-theme-v1 .page-wrap {
+  background:
+    radial-gradient(circle at 16% 8%, rgba(184, 149, 87, .16), transparent 28%),
+    linear-gradient(145deg, #f7faf3 0%, #eef5ee 100%) !important;
+}
+
+.menu-theme-v1 .entry-card {
+  margin: 18px auto !important;
+  border-radius: 32px !important;
+  border: 1px solid rgba(49, 95, 69, .16) !important;
+  box-shadow: 0 24px 60px rgba(40, 70, 52, .13) !important;
+}
+
+.menu-theme-v1 .logo-frame {
+  width: 142px !important;
+  height: 142px !important;
+  border-radius: 50% !important;
+  background: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(49, 95, 69, .12), 0 16px 34px rgba(45, 82, 60, .12) !important;
+}
+
+.menu-theme-v1 .lang-card,
+.menu-theme-v1 .encok-card,
+.menu-theme-v1 .yoresel-card,
+.menu-theme-v1 .category-product-card {
+  border-radius: 30px !important;
+  box-shadow: 0 18px 42px rgba(40, 70, 52, .10) !important;
+}
+
+.menu-theme-v1 .cat-thumb-ring {
+  border-radius: 24px !important;
+}
+
+.menu-theme-v1 .cat-thumb-inner {
+  border-radius: 20px !important;
+}
+
+.menu-theme-v1 .title h6:before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  margin-right: 9px;
+  vertical-align: middle;
+  background: var(--vg-accent-2);
+}
+
+/* V2: Noir tasting menu */
+.menu-theme-v2 .page-wrap,
+.menu-theme-v2 .osahan-home-page,
+.menu-theme-v2 .fixed-bottom-bar {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(201, 155, 91, .14), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(143, 31, 44, .18), transparent 26%),
+    #101113 !important;
+}
+
+.menu-theme-v2 .entry-card {
+  min-height: 100vh;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: rgba(24, 25, 27, .88) !important;
+}
+
+.menu-theme-v2 .logo-frame {
+  border-radius: 22px !important;
+  background: #111 !important;
+  border: 1px solid rgba(201, 155, 91, .34) !important;
+}
+
+.menu-theme-v2 .brand-tags,
+.menu-theme-v2 .footer-note {
+  letter-spacing: .22em !important;
+}
+
+.menu-theme-v2 .lang-card,
+.menu-theme-v2 .encok-card,
+.menu-theme-v2 .yoresel-card,
+.menu-theme-v2 .category-product-card {
+  border-radius: 8px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025)) !important;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, .34) !important;
+}
+
+.menu-theme-v2 .cat-slider {
+  border-bottom: 1px solid rgba(201, 155, 91, .18) !important;
+}
+
+.menu-theme-v2 .cat-thumb-ring,
+.menu-theme-v2 .cat-thumb-inner,
+.menu-theme-v2 .encok-image,
+.menu-theme-v2 .yoresel-image-wrap {
+  border-radius: 6px !important;
+}
+
+.menu-theme-v2 .food-chip,
+.menu-theme-v2 .encok-options img,
+.menu-theme-v2 .yoresel-option-icons img {
+  background: rgba(255,255,255,.04) !important;
+}
+
+/* V3: Coastal editorial */
+.menu-theme-v3 .page-wrap,
+.menu-theme-v3 .osahan-home-page,
+.menu-theme-v3 .fixed-bottom-bar {
+  background:
+    linear-gradient(180deg, #f8fcfc 0%, #edf8f8 54%, #fffaf1 100%) !important;
+}
+
+.menu-theme-v3 .entry-card {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  background: transparent !important;
+}
+
+.menu-theme-v3 .logo-frame {
+  width: 136px !important;
+  height: 136px !important;
+  border-radius: 28px !important;
+  transform: rotate(-2deg);
+}
+
+.menu-theme-v3 .lang-card {
+  border-radius: 20px 6px 20px 6px !important;
+}
+
+.menu-theme-v3 .encok-card,
+.menu-theme-v3 .yoresel-card,
+.menu-theme-v3 .category-product-card {
+  border-radius: 0 26px 0 26px !important;
+  box-shadow: 0 16px 38px rgba(24, 84, 96, .10) !important;
+}
+
+.menu-theme-v3 .cat-slider {
+  padding-top: 18px !important;
+}
+
+.menu-theme-v3 .cat-thumb-ring {
+  border-radius: 50% 50% 50% 12px !important;
+}
+
+.menu-theme-v3 .cat-thumb-inner {
+  border-radius: inherit !important;
+}
+
+.menu-theme-v3 .order-add-btn {
+  border-radius: 999px 999px 999px 8px !important;
+}
+
+/* V4: Grand hotel night */
+.menu-theme-v4 .page-wrap,
+.menu-theme-v4 .osahan-home-page,
+.menu-theme-v4 .fixed-bottom-bar {
+  background:
+    linear-gradient(160deg, #0c1018 0%, #111b2d 52%, #080a0e 100%) !important;
+}
+
+.menu-theme-v4 .entry-card {
+  min-height: 100vh;
+  border-radius: 0 !important;
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(21,27,39,.92), rgba(12,16,24,.92)) !important;
+}
+
+.menu-theme-v4 .logo-frame {
+  width: 156px !important;
+  height: 156px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(200, 161, 95, .35) !important;
+  box-shadow: 0 0 0 10px rgba(200, 161, 95, .06), 0 26px 60px rgba(0,0,0,.38) !important;
+}
+
+.menu-theme-v4 .lang-card,
+.menu-theme-v4 .encok-card,
+.menu-theme-v4 .yoresel-card,
+.menu-theme-v4 .category-product-card {
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.035)) !important;
+  box-shadow: 0 24px 54px rgba(0,0,0,.38) !important;
+}
+
+.menu-theme-v4 .title h6 {
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.menu-theme-v4 .cat-thumb-ring {
+  border-radius: 18px !important;
+  box-shadow: inset 0 0 0 1px rgba(200,161,95,.22);
+}
+
+.menu-theme-v4 .order-add-btn,
+.menu-theme-v4 .menu-order-submit {
+  background: linear-gradient(135deg, #c8a15f, #8d6a36) !important;
+  color: #10141b !important;
+  font-weight: 900 !important;
+}
+
+/* V5: Modern casual chef's table */
+.menu-theme-v5 .page-wrap,
+.menu-theme-v5 .osahan-home-page,
+.menu-theme-v5 .fixed-bottom-bar {
+  background:
+    linear-gradient(90deg, rgba(75,111,98,.07) 1px, transparent 1px),
+    linear-gradient(180deg, #fbf5ed 0%, #fffaf4 100%) !important;
+  background-size: 18px 18px, auto !important;
+}
+
+.menu-theme-v5 .entry-card {
+  margin: 14px auto !important;
+  border-radius: 24px !important;
+  box-shadow: 0 18px 44px rgba(87, 65, 45, .12) !important;
+}
+
+.menu-theme-v5 .hero-center {
+  text-align: left !important;
+}
+
+.menu-theme-v5 .logo-frame {
+  margin-left: 0 !important;
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 24px !important;
+}
+
+.menu-theme-v5 .divider {
+  margin-left: 0 !important;
+}
+
+.menu-theme-v5 .lang-card,
+.menu-theme-v5 .encok-card,
+.menu-theme-v5 .yoresel-card,
+.menu-theme-v5 .category-product-card {
+  border-radius: 22px !important;
+  border-width: 2px !important;
+  box-shadow: 8px 8px 0 rgba(197, 111, 78, .10) !important;
+}
+
+.menu-theme-v5 .cat-thumb-ring {
+  border-radius: 16px !important;
+  transform: rotate(-1deg);
+}
+
+.menu-theme-v5 .cat-item:nth-child(even) .cat-thumb-ring {
+  transform: rotate(1deg);
+}
+
+.menu-theme-v5 .order-add-btn {
+  border-radius: 14px !important;
+  background: var(--vg-accent-2) !important;
+}
+
+@media (min-width: 768px) {
+  body:not(.menu-theme-default)[class*="menu-theme-"] .osahan-main,
+  body:not(.menu-theme-default)[class*="menu-theme-"] .osahan-popular {
+    max-width: 760px;
+  }
+
+  .menu-theme-v3 .encok-grid {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .menu-theme-v1 .entry-card,
+  .menu-theme-v5 .entry-card {
+    margin: 0 auto !important;
+    border-radius: 0 0 28px 28px !important;
+  }
+
+  .menu-theme-v2 .entry-card,
+  .menu-theme-v4 .entry-card {
+    padding-top: 28px !important;
+  }
+
+  body:not(.menu-theme-default)[class*="menu-theme-"] .encok-card,
+  body:not(.menu-theme-default)[class*="menu-theme-"] .category-product-card {
+    overflow: hidden;
+  }
+}
