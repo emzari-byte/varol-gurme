@@ -16,8 +16,11 @@
       <link href="{{ serv }}vendor/icons/feather.css?v=20" rel="stylesheet" type="text/css">
       <link href="{{ serv }}vendor/bootstrap/css/bootstrap.min.css?v=20" rel="stylesheet">
       <link href="{{ serv }}css/menu-themes.css?v=4" rel="stylesheet">
-      <link href="{{ serv }}css/style.css?v=46" rel="stylesheet">
+      <link href="{{ serv }}css/style.css?v=47" rel="stylesheet">
       {{ restaurant_analytics_code|raw }}
+      {% if menu_schema_json %}
+      <script type="application/ld+json">{{ menu_schema_json|raw }}</script>
+      {% endif %}
       <link href="{{ serv }}vendor/sidebar/demo.css?v=20" rel="stylesheet">
    </head>
    <body class="menu-theme-{{ restaurant_menu_theme }}">
@@ -32,7 +35,7 @@
                         <a href="{{ item.href }}" class="menu-transition-link" data-category-id="{{ item.category_id }}" data-category-name="{{ item.name }}">
                            <span class="cat-thumb-ring">
                               <span class="cat-thumb-inner">
-                                 <img src="{{ item.thumb }}?v=20" alt="{{ item.name }}">
+                                 <img src="{{ item.thumb }}?v=20" alt="{{ item.name }}" width="90" height="90" decoding="async">
                               </span>
                            </span>
                            <span class="cat-label">{{ item.name }}</span>
@@ -59,7 +62,7 @@
                      {% for group in group_categories %}
                      <a href="{{ group.href }}" class="encok-card text-decoration-none menu-transition-link" data-category-id="{{ group.category_id }}" data-category-name="{{ group.name }}">
                         <div class="encok-image">
-                           <img src="{{ group.thumb }}?v=20" alt="{{ group.name }}">
+                           <img src="{{ group.thumb }}?v=20" alt="{{ group.name }}" loading="lazy" decoding="async">
                         </div>
 
                         <div class="encok-content">
@@ -120,7 +123,7 @@
 
                         <div class="encok-image menu-image-zoom"
                              onclick="openMenuLightbox('{{ product.thumb }}?v=20', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ category.name|e('js') }}')">
-                           <img src="{{ product.thumb }}?v=20" alt="{{ product.name }}">
+                           <img src="{{ product.thumb }}?v=20" alt="{{ product.name }}" loading="lazy" decoding="async">
                            {% if product.is_upcoming %}
                            <span class="coming-soon-badge">{{ text_coming_soon }}</span>
                            {% endif %}
@@ -184,6 +187,8 @@
                                     title="{{ opt.name }}"
                                     alt="{{ opt.name }}"
                                     data-toggle="tooltip"
+                                    loading="lazy"
+                                    decoding="async"
                                  >
                                  {% endfor %}
                               </div>

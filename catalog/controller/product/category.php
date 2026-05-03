@@ -28,7 +28,8 @@ class ControllerProductCategory extends Controller {
 
 		$menu_theme = (string)$this->model_common_restaurant_settings->get('restaurant_menu_theme', 'default');
 		$data['restaurant_menu_theme'] = in_array($menu_theme, array('default', 'v1', 'v2', 'v3', 'v4', 'v5'), true) ? $menu_theme : 'default';
-		$data['restaurant_analytics_code'] = (string)$this->model_common_restaurant_settings->get('restaurant_analytics_code', '');
+        $data['restaurant_analytics_code'] = (string)$this->model_common_restaurant_settings->get('restaurant_analytics_code', '');
+        $data['menu_schema_json'] = '';
 		$data['restaurant_wifi_name'] = trim((string)$this->model_common_restaurant_settings->get('restaurant_wifi_name', ''));
 		$data['restaurant_wifi_password'] = trim((string)$this->model_common_restaurant_settings->get('restaurant_wifi_password', ''));
 		$prep_extra_minutes = $this->model_common_restaurant_settings->getPreparationExtraMinutes();
@@ -251,7 +252,7 @@ class ControllerProductCategory extends Controller {
                 }
 
                 if (!empty($child_info['image'])) {
-                    $child_thumb = HTTPS_SERVER . 'image/' . $child_info['image'];
+                    $child_thumb = $this->model_tool_image->resize($child_info['image'], 240, 180);
                 } else {
                     $child_thumb = $this->model_tool_image->resize('no_image.png', 150, 110);
                 }
@@ -266,6 +267,7 @@ class ControllerProductCategory extends Controller {
             }
 
             $data['menu_footer'] = $this->load->controller('common/menu_footer');
+            $data['menu_schema_json'] = $this->buildCategoryGroupSchema($category_info['name'], $data['group_categories']);
             $this->response->setOutput($this->load->view('product/category', $data));
             return;
         }
@@ -278,12 +280,13 @@ class ControllerProductCategory extends Controller {
                 'name'     => $category_info['name'],
                 'products' => $direct_products,
                 'thumb'    => !empty($category_info['image'])
-                    ? (HTTPS_SERVER . 'image/' . $category_info['image'])
+                    ? $this->model_tool_image->resize($category_info['image'], 90, 90)
                     : $this->model_tool_image->resize('no_image.png', 40, 40),
                 'href'     => $this->url->link('product/category', 'path=' . (int)$category_info['category_id'] . $qr_param, true)
             );
 
             $data['menu_footer'] = $this->load->controller('common/menu_footer');
+            $data['menu_schema_json'] = $this->buildCategoryMenuSchema($category_info['name'], $data['categories']);
             $this->response->setOutput($this->load->view('product/category', $data));
             return;
         }
@@ -307,7 +310,7 @@ class ControllerProductCategory extends Controller {
                 }
 
                 if (!empty($child_info['image'])) {
-                    $child_thumb = HTTPS_SERVER . 'image/' . $child_info['image'];
+                    $child_thumb = $this->model_tool_image->resize($child_info['image'], 90, 90);
                 } else {
                     $child_thumb = $this->model_tool_image->resize('no_image.png', 40, 40);
                 }
@@ -323,6 +326,7 @@ class ControllerProductCategory extends Controller {
         }
 
         $data['menu_footer'] = $this->load->controller('common/menu_footer');
+        $data['menu_schema_json'] = $this->buildCategoryMenuSchema($category_info['name'], $data['categories']);
 		$this->response->setOutput($this->load->view('product/category', $data));
 	}
 
@@ -355,7 +359,7 @@ class ControllerProductCategory extends Controller {
             }
 
             if (!empty($result['image'])) {
-                $image = HTTPS_SERVER . 'image/' . $result['image'];
+                $image = $this->model_tool_image->resize($result['image'], 300, 220);
             } else {
                 $image = $this->model_tool_image->resize('no_image.png', 150, 110);
             }
@@ -411,6 +415,87 @@ class ControllerProductCategory extends Controller {
         }
 
         return $products;
+    }
+
+    private function buildCategoryMenuSchema($category_name, array $categories): string {
+        $schema = array(
+            '@context' => 'https://schema.org',
+            '@type' => 'Menu',
+            '@id' => $this->url->link('product/category', isset($this->request->get['path']) ? 'path=' . (string)$this->request->get['path'] : '', true) . '#menu',
+            'name' => 'Varol Gurme ' . $category_name . ' Menüsü',
+            'description' => 'Varol Gurme ' . $category_name . ' menüsü. Denizli kebabı, kebap, yöresel lezzetler ve restoran ürünleri.',
+            'keywords' => 'Denizli kebabı, Denizli kebap nerede yenir, en güzel Denizli kebabı, Varol Gurme, Denizli restoran',
+            'hasMenuSection' => array()
+        );
+
+        foreach ($categories as $category) {
+            $items = array();
+
+            foreach ($category['products'] as $product) {
+                $item = array(
+                    '@type' => 'MenuItem',
+                    'name' => $product['name'],
+                    'description' => trim(strip_tags(html_entity_decode((string)$product['description'], ENT_QUOTES, 'UTF-8'))),
+                    'image' => $product['thumb']
+                );
+
+                if (!empty($product['price'])) {
+                    $item['offers'] = array(
+                        '@type' => 'Offer',
+                        'priceCurrency' => 'TRY',
+                        'price' => $this->normalizeSchemaPrice($product['price'])
+                    );
+                }
+
+                $items[] = $item;
+            }
+
+            if ($items) {
+                $schema['hasMenuSection'][] = array(
+                    '@type' => 'MenuSection',
+                    'name' => $category['name'],
+                    'hasMenuItem' => $items
+                );
+            }
+        }
+
+        return json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    private function buildCategoryGroupSchema($category_name, array $groups): string {
+        $schema = array(
+            '@context' => 'https://schema.org',
+            '@type' => 'Menu',
+            '@id' => $this->url->link('product/category', isset($this->request->get['path']) ? 'path=' . (string)$this->request->get['path'] : '', true) . '#menu',
+            'name' => 'Varol Gurme ' . $category_name . ' Menüsü',
+            'description' => 'Varol Gurme ' . $category_name . ' menüsü. Denizli kebabı, kebap, yöresel lezzetler ve restoran kategorileri.',
+            'keywords' => 'Denizli kebabı, Denizli kebap nerede yenir, en güzel Denizli kebabı, Varol Gurme, Denizli restoran',
+            'hasMenuSection' => array()
+        );
+
+        foreach ($groups as $group) {
+            $schema['hasMenuSection'][] = array(
+                '@type' => 'MenuSection',
+                'name' => $group['name'],
+                'url' => $group['href'],
+                'image' => $group['thumb']
+            );
+        }
+
+        return json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+
+    private function normalizeSchemaPrice($price): string {
+        $price = html_entity_decode(strip_tags((string)$price), ENT_QUOTES, 'UTF-8');
+        $price = preg_replace('/[^0-9,\.]/', '', $price);
+
+        if (strpos($price, ',') !== false && strpos($price, '.') !== false) {
+            $price = str_replace('.', '', $price);
+        }
+
+        $price = str_replace(',', '.', $price);
+
+        return $price !== '' ? $price : '0';
     }
 
     private function normalizeUpcomingProductName($name) {

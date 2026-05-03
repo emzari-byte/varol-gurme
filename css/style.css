@@ -6240,6 +6240,7 @@ body:not(.home-entry-page),
 	margin-bottom: 8px !important;
 	padding: 3px !important;
 	border-radius: 50% !important;
+	background: #fff !important;
 }
 
 .cat-thumb-ring::before,
@@ -6250,11 +6251,29 @@ body:not(.home-entry-page),
 
 .cat-thumb-inner{
 	padding: 3px !important;
+	background: #fff !important;
+	overflow: hidden !important;
 }
 
 .cat-label{
 	font-size: 11px !important;
 	line-height: 1.2 !important;
+}
+
+.cat-thumb-inner img{
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover !important;
+	object-position: center !important;
+	transform: scale(1.18) !important;
+	background: transparent !important;
+}
+
+.encok-image img,
+.yoresel-image-wrap img,
+.list-card-image img{
+	content-visibility: auto;
+	object-fit: cover !important;
 }
 
 .home-entry-page .page-wrap{

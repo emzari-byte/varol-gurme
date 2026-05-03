@@ -10,8 +10,8 @@ class ControllerCommonHome extends Controller {
 		}
 
 		$data['title'] = $this->config->get('config_meta_title');
-		$data['description'] = $this->config->get('config_meta_description');
-		$data['keywords'] = $this->config->get('config_meta_keyword');
+		$data['description'] = $this->buildSeoDescription();
+		$data['keywords'] = $this->buildSeoKeywords();
 
 		if ($this->request->server['HTTPS']) {
 			$server = $this->config->get('config_ssl');
@@ -53,6 +53,7 @@ class ControllerCommonHome extends Controller {
 		$data['text_instagram_note'] = $this->language->get('text_instagram_note');
 		$data['instagram_link'] = $this->normalizeInstagramLink($this->model_common_restaurant_settings->get('restaurant_instagram_url', 'https://www.instagram.com/varolgurme/'));
 		$data['instagram_handle'] = $this->getInstagramHandle($data['instagram_link']);
+		$data['restaurant_schema_json'] = $this->buildRestaurantSchema($server, $data['logo'], $data['instagram_link']);
 
 		$this->load->model('extension/module/restaurant_tables');
 
@@ -185,5 +186,80 @@ class ControllerCommonHome extends Controller {
 		$parts = explode('/', $handle);
 
 		return '@' . $parts[0];
+	}
+
+	private function buildRestaurantSchema($server, $logo, $instagram_link) {
+		$base_url = rtrim($server, '/') . '/';
+		$phone = preg_replace('/[^0-9+]/', '', (string)$this->model_common_restaurant_settings->get('restaurant_whatsapp_phone', '905337843120'));
+		$lat = trim((string)$this->model_common_restaurant_settings->get('restaurant_weather_lat', '37.766670'));
+		$lon = trim((string)$this->model_common_restaurant_settings->get('restaurant_weather_lon', '29.031022'));
+
+		if ($phone !== '' && strpos($phone, '+') !== 0) {
+			$phone = '+' . $phone;
+		}
+
+		$schema = array(
+			'@context' => 'https://schema.org',
+			'@type' => 'Restaurant',
+			'@id' => $base_url . '#restaurant',
+			'name' => 'Varol Gurme',
+			'description' => $this->buildSeoDescription(),
+			'url' => $base_url,
+			'menu' => $this->url->link('common/menu', '', true),
+			'keywords' => $this->buildSeoKeywords(),
+			'areaServed' => array(
+				array(
+					'@type' => 'City',
+					'name' => 'Denizli'
+				)
+			),
+			'knowsAbout' => array(
+				'Denizli kebabı',
+				'Denizli kebap',
+				'Denizli yöresel yemek',
+				'Denizli kahvaltı',
+				'Denizli steak',
+				'Denizli aile restoranı'
+			),
+			'servesCuisine' => array(
+				'Turkish cuisine',
+				'Denizli cuisine',
+				'Denizli kebabı',
+				'Kebab',
+				'Breakfast',
+				'Steak',
+				'Dessert',
+				'Coffee'
+			),
+			'priceRange' => '₺₺',
+			'sameAs' => array_values(array_filter(array($instagram_link)))
+		);
+
+		if ($logo !== '') {
+			$schema['image'] = array($logo);
+			$schema['logo'] = $logo;
+		}
+
+		if ($phone !== '') {
+			$schema['telephone'] = $phone;
+		}
+
+		if (is_numeric($lat) && is_numeric($lon)) {
+			$schema['geo'] = array(
+				'@type' => 'GeoCoordinates',
+				'latitude' => (float)$lat,
+				'longitude' => (float)$lon
+			);
+		}
+
+		return json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	}
+
+	private function buildSeoDescription() {
+		return 'Varol Gurme, Denizli kebabı, kebap, yöresel lezzetler, kahvaltı, steak ve tatlı seçenekleriyle Denizli restoran deneyimi sunar.';
+	}
+
+	private function buildSeoKeywords() {
+		return 'Varol Gurme, Denizli kebabı, Denizli kebap nerede yenir, en güzel Denizli kebabı, Denizli restoran, Denizli yöresel yemek, Denizli kahvaltı, Denizli steak, Denizli aile restoranı';
 	}
 }

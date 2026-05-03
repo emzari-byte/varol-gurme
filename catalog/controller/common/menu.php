@@ -157,10 +157,20 @@ class ControllerCommonMenu extends Controller {
 		$data['yoreselpro'] = $this->buildHomeProducts($popular_section['products'], $gun, $active_language_id, $show_prices, 750, 550, false, $prep_extra_minutes);
 
 		$data['encoktercihname'] = $regional_section['name'];
-		$data['encoktercihpro'] = $this->buildHomeProducts($regional_section['products'], $gun, $active_language_id, $show_prices, 150, 110, true, $prep_extra_minutes);
+		$data['encoktercihpro'] = $this->buildHomeProducts($regional_section['products'], $gun, $active_language_id, $show_prices, 240, 180, false, $prep_extra_minutes);
 
 		$newest_product_ids = $this->getRandomNewestProductIds(30, 5);
 		$data['newestpro'] = $this->buildHomeProducts($newest_product_ids, $gun, $active_language_id, $show_prices, 150, 110, true, $prep_extra_minutes);
+		$data['menu_schema_json'] = $this->buildMenuSchema(array(
+			array(
+				'name' => $data['yoreselname'] ? $data['yoreselname'] : $data['text_most_preferred'],
+				'products' => $data['yoreselpro']
+			),
+			array(
+				'name' => $data['encoktercihname'] ? $data['encoktercihname'] : $data['text_regional_products'],
+				'products' => $data['encoktercihpro']
+			)
+		));
 
 		$data['home'] = $this->url->link('common/home', $qr_param, true);
 		$data['serv'] = HTTPS_SERVER;
@@ -260,6 +270,64 @@ class ControllerCommonMenu extends Controller {
 		}
 
 		return $products;
+	}
+
+	private function buildMenuSchema($sections) {
+		$schema = array(
+			'@context' => 'https://schema.org',
+			'@type' => 'Menu',
+			'@id' => $this->url->link('common/menu', '', true) . '#menu',
+			'name' => 'Varol Gurme Menü',
+			'description' => 'Varol Gurme Denizli kebabı, kebap, yöresel lezzetler, kahvaltı, steak, tatlı ve içecek menüsü.',
+			'keywords' => 'Denizli kebabı, Denizli kebap nerede yenir, en güzel Denizli kebabı, Denizli yöresel yemek, Varol Gurme',
+			'hasMenuSection' => array()
+		);
+
+		foreach ($sections as $section) {
+			$items = array();
+
+			foreach ($section['products'] as $product) {
+				$item = array(
+					'@type' => 'MenuItem',
+					'name' => $product['name'],
+					'description' => trim(strip_tags(html_entity_decode((string)$product['description'], ENT_QUOTES, 'UTF-8'))),
+					'image' => $product['thumb']
+				);
+
+				if (!empty($product['price'])) {
+					$item['offers'] = array(
+						'@type' => 'Offer',
+						'priceCurrency' => 'TRY',
+						'price' => $this->normalizeSchemaPrice($product['price'])
+					);
+				}
+
+				$items[] = $item;
+			}
+
+			if ($items) {
+				$schema['hasMenuSection'][] = array(
+					'@type' => 'MenuSection',
+					'name' => $section['name'],
+					'hasMenuItem' => $items
+				);
+			}
+		}
+
+		return json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+	}
+
+	private function normalizeSchemaPrice($price) {
+		$price = html_entity_decode(strip_tags((string)$price), ENT_QUOTES, 'UTF-8');
+		$price = preg_replace('/[^0-9,\.]/', '', $price);
+
+		if (strpos($price, ',') !== false && strpos($price, '.') !== false) {
+			$price = str_replace('.', '', $price);
+		}
+
+		$price = str_replace(',', '.', $price);
+
+		return $price !== '' ? $price : '0';
 	}
 
 	private function getRandomNewestProductIds($pool_limit = 30, $display_limit = 5) {
