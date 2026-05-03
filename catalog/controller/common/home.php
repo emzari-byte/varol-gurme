@@ -45,12 +45,14 @@ class ControllerCommonHome extends Controller {
 		$data['text_html_lang'] = $this->language->get('text_html_lang');
 		$data['text_open_air_menu'] = $this->language->get('text_open_air_menu');
 		$data['text_select_language'] = $this->language->get('text_select_language');
+		$data['text_cuisine_line'] = $this->language->get('text_cuisine_line');
 		$data['text_english_menu'] = $this->language->get('text_english_menu');
 		$data['text_open_menu'] = $this->language->get('text_open_menu');
 		$data['text_turkish_menu'] = $this->language->get('text_turkish_menu');
 		$data['text_open_turkish_menu'] = $this->language->get('text_open_turkish_menu');
 		$data['text_follow_us'] = $this->language->get('text_follow_us');
 		$data['text_instagram_note'] = $this->language->get('text_instagram_note');
+		$data['text_home_footer_note'] = $this->language->get('text_home_footer_note');
 		$data['instagram_link'] = $this->normalizeInstagramLink($this->model_common_restaurant_settings->get('restaurant_instagram_url', 'https://www.instagram.com/varolgurme/'));
 		$data['instagram_handle'] = $this->getInstagramHandle($data['instagram_link']);
 		$data['restaurant_schema_json'] = $this->buildRestaurantSchema($server, $data['logo'], $data['instagram_link']);

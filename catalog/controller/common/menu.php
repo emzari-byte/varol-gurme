@@ -199,8 +199,10 @@ class ControllerCommonMenu extends Controller {
 				} else {
 					$image = $this->model_tool_image->resize($product_info['image'], $width, $height);
 				}
+				$popup = $this->model_tool_image->resize($product_info['image'], 1000, 740);
 			} else {
 				$image = $this->model_tool_image->resize('no_image.png', $width, $height);
+				$popup = $this->model_tool_image->resize('no_image.png', 1000, 740);
 			}
 
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
@@ -257,6 +259,7 @@ class ControllerCommonMenu extends Controller {
 				'is_upcoming' => $name_info['is_upcoming'],
 				'description' => $this->model_common_restaurant_settings->cleanProductDescriptionHtml($product_info['description']),
 				'thumb'       => $image,
+				'popup'       => $popup,
 				'options'     => $options,
 				'tag'         => $this->model_common_restaurant_settings->adjustPreparationTag($product_info['tag'], $prep_extra_minutes),
 				'price'       => $price,

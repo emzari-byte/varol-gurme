@@ -6200,6 +6200,453 @@ body:not(.home-entry-page),
 	color: #7a5a30 !important;
 }
 
+/* Varol Gurme final: Sakin Premium home + matching menu/category palette. */
+:root {
+	--vg-premium-page: #f4ecdf;
+	--vg-premium-paper: #fffdf9;
+	--vg-premium-card: #fffaf4;
+	--vg-premium-ink: #302a25;
+	--vg-premium-muted: #81786f;
+	--vg-premium-gold: #b39b78;
+	--vg-premium-gold-dark: #8f7654;
+	--vg-premium-line: #eadfce;
+	--vg-premium-shadow: rgba(89, 66, 37, .12);
+}
+
+.home-entry-page {
+	background:
+		radial-gradient(circle at 50% 40%, rgba(255,255,255,.95) 0 35%, rgba(255,255,255,0) 65%),
+		linear-gradient(180deg, #fffaf2 0%, #efe0ca 100%) !important;
+	min-height: 100svh !important;
+	min-height: 100dvh !important;
+	overflow: hidden !important;
+}
+
+.home-entry-page .page-wrap {
+	height: 100svh !important;
+	height: 100dvh !important;
+	min-height: 0 !important;
+	padding: 24px 22px !important;
+	align-items: center !important;
+	justify-content: center !important;
+	background: transparent !important;
+	overflow: hidden !important;
+}
+
+.home-entry-page .entry-card {
+	width: min(100%, 630px) !important;
+	max-height: calc(100svh - 48px) !important;
+	min-height: 0 !important;
+	padding: clamp(24px, 3.3vh, 38px) 28px clamp(20px, 2.8vh, 30px) !important;
+	border-radius: 38px !important;
+	background: rgba(255,255,255,.84) !important;
+	border: 1px solid #eadcc8 !important;
+	box-shadow: 0 30px 70px rgba(95,72,39,.18) !important;
+	overflow: hidden !important;
+}
+
+.home-entry-page .entry-card::before,
+.home-entry-page .entry-card::after {
+	display: none !important;
+}
+
+.home-entry-page .mini-badge {
+	width: max-content !important;
+	max-width: 100% !important;
+	margin: 0 auto clamp(20px, 3vh, 34px) !important;
+	padding: 10px 20px !important;
+	min-height: 40px !important;
+	border-radius: 999px !important;
+	background: rgba(255,255,255,.76) !important;
+	border: 1px solid var(--vg-premium-line) !important;
+	box-shadow: none !important;
+	color: #6f604c !important;
+	font-size: 14px !important;
+	line-height: 1.1 !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+	text-transform: uppercase !important;
+}
+
+.home-entry-page .mini-badge i {
+	color: #c99142 !important;
+	font-size: 17px !important;
+}
+
+.home-entry-page .hero-center {
+	text-align: center !important;
+}
+
+.home-entry-page .brand-logo-shell {
+	width: clamp(170px, 22vh, 205px) !important;
+	height: clamp(86px, 11vh, 104px) !important;
+	margin: 0 auto clamp(18px, 2.5vh, 24px) !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+}
+
+.home-entry-page .brand-logo-wide {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: contain !important;
+	display: block !important;
+	mix-blend-mode: multiply !important;
+}
+
+.home-entry-page .logo-frame,
+.home-entry-page .home-brand-title {
+	display: none !important;
+}
+
+.home-entry-page .home-cuisine-line {
+	max-width: 420px !important;
+	margin: 0 auto 12px !important;
+	color: #6f604f !important;
+	text-align: center !important;
+	font-size: clamp(12px, 1.6vh, 13px) !important;
+	line-height: 1.55 !important;
+	font-weight: 500 !important;
+	letter-spacing: .04em !important;
+	text-transform: uppercase !important;
+}
+
+.home-entry-page .headline {
+	max-width: 430px !important;
+	margin: 0 auto clamp(14px, 2.5vh, 24px) !important;
+	color: #837b72 !important;
+	font-size: clamp(15px, 1.95vh, 17px) !important;
+	line-height: 1.55 !important;
+	font-weight: 400 !important;
+}
+
+.home-entry-page .divider {
+	width: 112px !important;
+	height: 4px !important;
+	margin: 0 auto clamp(18px, 3vh, 30px) !important;
+	border-radius: 999px !important;
+	background: linear-gradient(90deg, transparent, #d3ad73, transparent) !important;
+	box-shadow: none !important;
+}
+
+.home-entry-page .language-grid {
+	display: grid !important;
+	gap: clamp(13px, 2vh, 18px) !important;
+}
+
+.home-entry-page .lang-card {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 16px !important;
+	min-height: clamp(82px, 10.4vh, 98px) !important;
+	padding: 14px 16px !important;
+	border-radius: 24px !important;
+	background: rgba(255,255,255,.86) !important;
+	border: 1px solid var(--vg-premium-line) !important;
+	box-shadow: 0 16px 36px rgba(69,48,25,.08) !important;
+}
+
+.home-entry-page .language-grid .lang-card + .lang-card {
+	background: #ffffff !important;
+}
+
+.home-entry-page .lang-left {
+	flex: 1 1 auto !important;
+	min-width: 0 !important;
+	gap: 14px !important;
+}
+
+.home-entry-page .flag-shell {
+	width: 50px !important;
+	height: 50px !important;
+	border-radius: 50% !important;
+	background: #ffffff !important;
+	border: 1px solid #eee0cb !important;
+	box-shadow: 0 10px 24px rgba(97,76,48,.11) !important;
+}
+
+.home-entry-page .btn-flag {
+	width: 28px !important;
+	height: 28px !important;
+	object-fit: cover !important;
+}
+
+.home-entry-page .lang-copy {
+	flex: 1 1 auto !important;
+	min-width: 0 !important;
+}
+
+.home-entry-page .lang-copy strong {
+	color: #332d27 !important;
+	font-size: clamp(18px, 2.3vh, 21px) !important;
+	line-height: 1.12 !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+}
+
+.home-entry-page .lang-copy small {
+	margin-top: 6px !important;
+	color: var(--vg-premium-muted) !important;
+	font-size: clamp(13px, 1.75vh, 15px) !important;
+	line-height: 1.35 !important;
+	font-weight: 400 !important;
+	white-space: normal !important;
+}
+
+.home-entry-page .lang-arrow {
+	width: 48px !important;
+	height: 48px !important;
+	border-radius: 50% !important;
+	background: var(--vg-premium-paper) !important;
+	color: #7e633f !important;
+	border: 1px solid var(--vg-premium-line) !important;
+	box-shadow: none !important;
+	font-size: 22px !important;
+}
+
+.home-entry-page .feather-arrow-right {
+	animation: none !important;
+	-webkit-animation: none !important;
+}
+
+.home-entry-page .home-instagram {
+	margin-top: clamp(18px, 2.8vh, 30px) !important;
+	padding-top: clamp(17px, 2.6vh, 27px) !important;
+	border-top: 1px solid var(--vg-premium-line) !important;
+}
+
+.home-entry-page .home-instagram-link {
+	gap: 12px !important;
+	color: #3b3028 !important;
+	font-size: clamp(17px, 2.15vh, 19px) !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+}
+
+.home-entry-page .home-instagram-link i {
+	color: #cf6d96 !important;
+	font-size: clamp(22px, 2.8vh, 25px) !important;
+}
+
+.home-entry-page .home-instagram p {
+	max-width: 500px !important;
+	margin: 12px auto 0 !important;
+	color: #766d64 !important;
+	font-size: clamp(13px, 1.7vh, 15px) !important;
+	line-height: 1.5 !important;
+}
+
+.home-entry-page .footer-note {
+	margin-top: clamp(14px, 2.2vh, 24px) !important;
+	color: #9b8d7d !important;
+	font-size: clamp(12px, 1.55vh, 14px) !important;
+	line-height: 1.2 !important;
+	font-weight: 500 !important;
+	letter-spacing: .08em !important;
+}
+
+body:not(.home-entry-page),
+body:not(.home-entry-page) .osahan-home-page,
+body:not(.home-entry-page) .fixed-bottom-bar,
+body:not(.home-entry-page) .osahan-main {
+	background: linear-gradient(180deg, #fffaf2 0%, #f5ead9 100%) !important;
+	color: var(--vg-premium-ink) !important;
+}
+
+body:not(.home-entry-page) .category-topbar,
+body:not(.home-entry-page) .cat-slider.border-bottom,
+body:not(.home-entry-page) .cat-slider {
+	background: rgba(255,253,249,.96) !important;
+	border-color: var(--vg-premium-line) !important;
+	box-shadow: 0 8px 22px rgba(89,66,37,.05) !important;
+}
+
+body:not(.home-entry-page) .cat-thumb-ring {
+	background: linear-gradient(180deg, #ffffff 0%, #fbf3e8 100%) !important;
+	border-color: #ead8bf !important;
+	box-shadow: 0 8px 18px rgba(89,66,37,.07) !important;
+}
+
+body:not(.home-entry-page) .cat-thumb-inner {
+	background: #ffffff !important;
+}
+
+body:not(.home-entry-page) .cat-label,
+body:not(.home-entry-page) .title h6,
+body:not(.home-entry-page) .encok-top h6,
+body:not(.home-entry-page) .yoresel-title {
+	color: var(--vg-premium-ink) !important;
+	font-weight: 700 !important;
+	letter-spacing: 0 !important;
+}
+
+body:not(.home-entry-page) .cat-item.active .cat-label,
+body:not(.home-entry-page) .cat-item a:hover .cat-label,
+body:not(.home-entry-page) .encok-price,
+body:not(.home-entry-page) .price,
+body:not(.home-entry-page) .yoresel-price {
+	color: var(--vg-premium-gold-dark) !important;
+}
+
+body:not(.home-entry-page) .cat-item.active .cat-thumb-ring {
+	border-color: #c7a77b !important;
+	box-shadow: 0 10px 24px rgba(179,155,120,.18) !important;
+}
+
+body:not(.home-entry-page) .encok-card,
+body:not(.home-entry-page) .category-product-card,
+body:not(.home-entry-page) .list-card,
+body:not(.home-entry-page) .yoresel-card,
+body:not(.home-entry-page) .menu-ai-card,
+body:not(.home-entry-page) .menu-ai-panel {
+	background: rgba(255,255,255,.88) !important;
+	border-color: var(--vg-premium-line) !important;
+	box-shadow: 0 14px 34px rgba(89,66,37,.07) !important;
+}
+
+body:not(.home-entry-page) .encok-desc,
+body:not(.home-entry-page) .food-meta,
+body:not(.home-entry-page) .small,
+body:not(.home-entry-page) .text-muted,
+body:not(.home-entry-page) .text-gray,
+body:not(.home-entry-page) .yoresel-desc {
+	color: var(--vg-premium-muted) !important;
+}
+
+body:not(.home-entry-page) .food-chip,
+body:not(.home-entry-page) .menu-wifi-action,
+body:not(.home-entry-page) .menu-ai-home,
+body:not(.home-entry-page) .menu-mode-btn,
+body:not(.home-entry-page) .menu-ai-period,
+body:not(.home-entry-page) .menu-ai-weather,
+body:not(.home-entry-page) .menu-ai-mode-label,
+body:not(.home-entry-page) .menu-ai-hot-note,
+body:not(.home-entry-page) .menu-ai-card-tag,
+body:not(.home-entry-page) .menu-ai-modal-tag {
+	background: #fffaf2 !important;
+	border-color: #ead8bf !important;
+	color: #7a5a30 !important;
+}
+
+body:not(.home-entry-page) .order-add-btn,
+body:not(.home-entry-page) .menu-order-submit,
+body:not(.home-entry-page) .feedback-submit {
+	background: linear-gradient(135deg, #8f7654 0%, #b39b78 100%) !important;
+	color: #ffffff !important;
+	border: 0 !important;
+	box-shadow: 0 14px 28px rgba(143,118,84,.18) !important;
+}
+
+body:not(.home-entry-page) .floating-home-btn,
+body:not(.home-entry-page) .floating-menu-nav,
+body:not(.home-entry-page) .floating-menu-top {
+	background: linear-gradient(135deg, #a5875d 0%, #c3a77d 100%) !important;
+	color: #ffffff !important;
+	border: 1px solid rgba(255,250,242,.72) !important;
+	box-shadow: 0 16px 30px rgba(143,118,84,.20), inset 0 1px 0 rgba(255,255,255,.24) !important;
+}
+
+@media (max-width: 575px) {
+	.home-entry-page .page-wrap {
+		padding: clamp(48px, 7.4vh, 78px) 10px 0 !important;
+		align-items: flex-start !important;
+		justify-content: flex-start !important;
+	}
+
+	.home-entry-page .entry-card {
+		width: min(100%, 390px) !important;
+		padding: 20px 18px 18px !important;
+		border-radius: 32px !important;
+	}
+
+	.home-entry-page .mini-badge {
+		font-size: 13px !important;
+		padding-inline: 16px !important;
+		margin-bottom: 18px !important;
+	}
+
+	.home-entry-page .brand-logo-shell {
+		width: 174px !important;
+		height: 88px !important;
+		margin-bottom: 16px !important;
+	}
+
+	.home-entry-page .home-cuisine-line {
+		font-size: 11.5px !important;
+		line-height: 1.5 !important;
+	}
+
+	.home-entry-page .headline {
+		font-size: 14.5px !important;
+		line-height: 1.45 !important;
+	}
+
+	.home-entry-page .language-grid {
+		gap: 14px !important;
+	}
+
+	.home-entry-page .lang-card {
+		min-height: 84px !important;
+		padding: 13px 15px !important;
+	}
+
+	.home-entry-page .flag-shell {
+		width: 48px !important;
+		height: 48px !important;
+	}
+
+	.home-entry-page .btn-flag {
+		width: 28px !important;
+		height: 28px !important;
+	}
+
+	.home-entry-page .lang-copy strong {
+		font-size: 19px !important;
+	}
+
+	.home-entry-page .lang-copy small {
+		font-size: 13px !important;
+		line-height: 1.25 !important;
+	}
+
+	.home-entry-page .lang-arrow {
+		width: 44px !important;
+		height: 44px !important;
+	}
+}
+
+@media (max-width: 390px), (max-height: 780px) {
+	.home-entry-page .page-wrap {
+		padding-top: 18px !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
+
+	.home-entry-page .entry-card {
+		padding: 18px 16px 14px !important;
+	}
+
+	.home-entry-page .brand-logo-shell {
+		width: 156px !important;
+		height: 78px !important;
+	}
+
+	.home-entry-page .home-instagram {
+		margin-top: 13px !important;
+		padding-top: 13px !important;
+	}
+
+	.home-entry-page .home-instagram p {
+		font-size: 12.5px !important;
+		margin-top: 8px !important;
+	}
+
+	.home-entry-page .footer-note {
+		margin-top: 9px !important;
+	}
+}
+
 .menu-mode-btn.is-active {
 	background: linear-gradient(135deg, #3c322a, #9b6f32) !important;
 	color: #fffaf2 !important;

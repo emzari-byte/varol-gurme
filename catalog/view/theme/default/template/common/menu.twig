@@ -17,7 +17,7 @@
       <link href="{{ serv }}vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <!-- Custom styles for this template -->
       <link href="{{ serv }}css/menu-themes.css?v=4" rel="stylesheet">
-      <link href="{{ serv }}css/style.css?v=47" rel="stylesheet">
+      <link href="{{ serv }}css/style.css?v=48" rel="stylesheet">
       {{ restaurant_analytics_code|raw }}
       {% if menu_schema_json %}
       <script type="application/ld+json">{{ menu_schema_json|raw }}</script>
@@ -65,7 +65,7 @@
                        data-section-name="{{ yoreselname ? yoreselname|e : text_regional_products|e }}">
                      <div class="yoresel-card-inner">
                         <div class="list-card-image yoresel-image-wrap menu-image-zoom"
-                             onclick="openMenuLightbox('{{ pro.thumb }}', '{{ pro.name|e('js') }}', '{{ pro.product_id }}', '{{ yoreselname ? yoreselname|e('js') : text_regional_products|e('js') }}')">
+                             onclick="openMenuLightbox('{{ pro.popup }}?v=21', '{{ pro.name|e('js') }}', '{{ pro.product_id }}', '{{ yoreselname ? yoreselname|e('js') : text_regional_products|e('js') }}')">
                           
                            <img src="{{ pro.thumb }}" class="img-fluid item-img w-100" alt="{{ pro.name }}" loading="lazy" decoding="async"/>
                            {% if pro.is_upcoming %}
@@ -153,7 +153,7 @@
                        data-product-name="{{ product.name|e }}"
                        data-section-name="{{ encoktercihname ? encoktercihname|e : text_most_preferred|e }}">
                      <div class="encok-image menu-image-zoom"
-                          onclick="openMenuLightbox('{{ product.thumb }}', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ encoktercihname ? encoktercihname|e('js') : text_most_preferred|e('js') }}')">
+                          onclick="openMenuLightbox('{{ product.popup }}?v=21', '{{ product.name|e('js') }}', '{{ product.product_id }}', '{{ encoktercihname ? encoktercihname|e('js') : text_most_preferred|e('js') }}')">
                         <img src="{{ product.thumb }}" class="img-fluid item-img w-100" alt="{{ product.name }}" loading="lazy" decoding="async">
                         {% if product.is_upcoming %}
                         <span class="coming-soon-badge">{{ text_coming_soon }}</span>

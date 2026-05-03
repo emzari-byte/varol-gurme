@@ -10,7 +10,7 @@
    <link href="{{ serv }}vendor/bootstrap/css/bootstrap.min.css?v=5" rel="stylesheet">
    <link href="{{ serv }}vendor/icons/feather.css?v=5" rel="stylesheet">
 <link href="{{ serv }}css/menu-themes.css?v=4" rel="stylesheet">
-<link href="{{ serv }}css/style.css?v=47" rel="stylesheet">
+<link href="{{ serv }}css/style.css?v=48" rel="stylesheet">
 {{ restaurant_analytics_code|raw }}
 {% if restaurant_schema_json %}
 <script type="application/ld+json">{{ restaurant_schema_json|raw }}</script>
@@ -26,13 +26,11 @@
          <span>{{ text_open_air_menu }}</span>
       </div>
       <div class="hero-center">
-         <div class="logo-frame">
-            <div class="logo-ring"></div>
-            <img src="{{ logo }}?v=5" class="logo" alt="{{ title }}">
+         <div class="brand-logo-shell">
+            <img src="{{ serv }}varol-gurme-logo.png?v=1" class="brand-logo-wide" alt="{{ title }}">
          </div>
 
-         <h1 class="home-brand-title">Varol Gurme</h1>
-
+         <p class="home-cuisine-line">{{ text_cuisine_line }}</p>
          <p class="headline">{{ text_select_language }}</p>
 
          <div class="divider"></div>
@@ -106,7 +104,7 @@
          <p>{{ text_instagram_note }}</p>
       </div>
 
-      <div class="footer-note">VAROL GURME DENEYİMİ</div>
+      <div class="footer-note">{{ text_home_footer_note }}</div>
 
    </div>
 </div>
