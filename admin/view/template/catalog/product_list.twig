@@ -430,6 +430,11 @@
                     <input type="text" name="price" class="form-control" placeholder="1200" />
                   </div>
                   <div class="quick-product-field">
+                    <label>Menü Fiyat Yazısı</label>
+                    <input type="text" name="location" class="form-control" placeholder="Kişi başı 600 TL" />
+                    <div class="help-block">Boşsa standart fiyat görünür. Doluysa menüde bu metin gösterilir.</div>
+                  </div>
+                  <div class="quick-product-field">
                     <label>Durum</label>
                     <select name="status" class="form-control">
                       <option value="1">Menüde aktif</option>
@@ -666,6 +671,7 @@ function fillQuickProductForm(product) {
 	$('#quick-product-id').val(product.product_id);
 	$('input[name="model"]').val(product.model);
 	$('input[name="price"]').val(product.price);
+	$('input[name="location"]').val(product.location || '');
 	$('select[name="status"]').val(product.status);
 	$('input[name="sort_order"]').val(product.sort_order);
 	$('input[name="prep_time"]').val(product.prep_time || '');

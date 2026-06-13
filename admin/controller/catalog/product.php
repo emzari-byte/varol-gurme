@@ -249,7 +249,7 @@ class ControllerCatalogProduct extends Controller {
 			$value = isset($this->request->post['value']) ? $this->request->post['value'] : '';
 			$product_description = isset($this->request->post['product_description']) ? $this->request->post['product_description'] : array();
 			$product_category = isset($this->request->post['product_category']) ? (array)$this->request->post['product_category'] : array();
-			$allowed = array('name', 'model', 'price', 'status', 'image', 'description', 'category');
+			$allowed = array('name', 'model', 'price', 'location', 'status', 'image', 'description', 'category');
 
 			if (!$product_id || !in_array($field, $allowed)) {
 				$json['error'] = 'Geçersiz hızlı düzenleme isteği.';
@@ -348,6 +348,7 @@ class ControllerCatalogProduct extends Controller {
 					'product_id' => (int)$product_id,
 					'model' => $product_info['model'],
 					'price' => $product_info['price'],
+					'location' => $product_info['location'],
 					'status' => (int)$product_info['status'],
 					'sort_order' => (int)$product_info['sort_order'],
 					'image' => $product_info['image'],
@@ -382,6 +383,7 @@ class ControllerCatalogProduct extends Controller {
 			$prep_time = isset($this->request->post['prep_time']) ? $this->normalizePreparationTime($this->request->post['prep_time']) : '';
 			$model = isset($this->request->post['model']) ? trim($this->request->post['model']) : '';
 			$price = isset($this->request->post['price']) ? str_replace(',', '.', trim($this->request->post['price'])) : '0';
+			$location = isset($this->request->post['location']) ? trim($this->request->post['location']) : '';
 			$status = isset($this->request->post['status']) ? (int)$this->request->post['status'] : 1;
 			$sort_order = isset($this->request->post['sort_order']) ? (int)$this->request->post['sort_order'] : 0;
 			$image = isset($this->request->post['image']) ? trim($this->request->post['image']) : '';
@@ -439,7 +441,7 @@ class ControllerCatalogProduct extends Controller {
 					'jan'                 => '',
 					'isbn'                => '',
 					'mpn'                 => '',
-					'location'            => '',
+					'location'            => $location,
 					'quantity'            => 10000,
 					'minimum'             => 1,
 					'subtract'            => 0,
@@ -474,6 +476,7 @@ class ControllerCatalogProduct extends Controller {
 						$this->model_catalog_product->quickUpdateProductCategories($product_id, array_unique($clean_categories));
 						$this->model_catalog_product->quickUpdateProductField($product_id, 'model', $model);
 						$this->model_catalog_product->quickUpdateProductField($product_id, 'price', $price);
+						$this->model_catalog_product->quickUpdateProductField($product_id, 'location', $location);
 						$this->model_catalog_product->quickUpdateProductField($product_id, 'status', $status ? 1 : 0);
 						$this->model_catalog_product->quickUpdateProductField($product_id, 'sort_order', $sort_order);
 						$this->model_catalog_product->quickUpdateProductField($product_id, 'image', $image);
