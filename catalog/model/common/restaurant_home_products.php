@@ -8,11 +8,19 @@ class ModelCommonRestaurantHomeProducts extends Model {
 		),
 		'noon' => array(
 			'label' => 'Öğlen',
-			'range' => '12:01 - 21:00'
+			'range' => '12:01 - 15:00'
+		),
+		'afternoon' => array(
+			'label' => 'İkindi',
+			'range' => '15:01 - 18:00'
 		),
 		'evening' => array(
 			'label' => 'Akşam',
-			'range' => '21:01 - 08:29'
+			'range' => '18:01 - 21:30'
+		),
+		'night' => array(
+			'label' => 'Gece',
+			'range' => '21:31 - 08:29'
 		)
 	);
 
@@ -96,7 +104,9 @@ class ModelCommonRestaurantHomeProducts extends Model {
 				products_by_period = '" . $this->db->escape(json_encode(array(
 					'morning' => $product_ids,
 					'noon' => $product_ids,
-					'evening' => $product_ids
+					'afternoon' => $product_ids,
+					'evening' => $product_ids,
+					'night' => $product_ids
 				))) . "',
 				status = '1',
 				sort_order = '" . (int)$sort_order . "',
@@ -174,11 +184,19 @@ class ModelCommonRestaurantHomeProducts extends Model {
 			return 'morning';
 		}
 
-		if ($time >= 1201 && $time <= 2100) {
+		if ($time >= 1201 && $time <= 1500) {
 			return 'noon';
 		}
 
-		return 'evening';
+		if ($time >= 1501 && $time <= 1800) {
+			return 'afternoon';
+		}
+
+		if ($time >= 1801 && $time <= 2130) {
+			return 'evening';
+		}
+
+		return 'night';
 	}
 
 	private function getTitle($row, $language_id) {
